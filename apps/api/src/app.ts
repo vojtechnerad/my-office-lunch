@@ -1,4 +1,4 @@
-import configureOpenApi from './lib/configure-open-api';
+import configureOpenApi from './lib/configure-openapi';
 import { createApp } from './lib/create-app';
 import index from './routes/index.route';
 
