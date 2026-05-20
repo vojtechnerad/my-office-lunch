@@ -1,6 +1,6 @@
-import { OpenAPIHono } from '@hono/zod-openapi';
+import createApp from './lib/create-app';
 
-const app = new OpenAPIHono();
+const app = createApp();
 
 app.get('/', (c) => {
   return c.text('Hello Hono in Nx Monorepo!');
