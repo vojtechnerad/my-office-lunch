@@ -8,7 +8,7 @@ import app from './app';
  * [ ] Implement logging middleware
  */
 
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const port = Number(process.env.PORT) || 3000;
 
 console.log(`🚀 Server běží na http://localhost:${port}`);
 
