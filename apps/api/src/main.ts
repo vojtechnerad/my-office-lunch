@@ -1,5 +1,6 @@
 import { serve } from '@hono/node-server';
 import app from './app';
+import { env } from './env';
 
 /*
  * TODOs
@@ -8,11 +9,9 @@ import app from './app';
  * [ ] Implement logging middleware
  */
 
-const port = Number(process.env.PORT) || 3000;
-
-console.log(`🚀 Server běží na http://localhost:${port}`);
+console.log(`🚀 Server běží na http://localhost:${env.PORT}`);
 
 serve({
   fetch: app.fetch,
-  port,
+  port: env.PORT,
 });
