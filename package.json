@@ -2,7 +2,9 @@
   "name": "@my-office-lunch/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "db:up": "docker compose up -d"
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "~21.2.0",
