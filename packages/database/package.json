@@ -1,0 +1,36 @@
+{
+  "name": "database",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "nx": {
+    "targets": {
+      "db:generate": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "drizzle-kit generate",
+          "cwd": "packages/database"
+        }
+      },
+      "db:migrate": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "drizzle-kit migrate",
+          "cwd": "packages/database"
+        }
+      },
+      "db:studio": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "npx drizzle-kit studio",
+          "cwd": "packages/database"
+        }
+      }
+    }
+  }
+}
