@@ -1,10 +1,11 @@
 import configureOpenApi from './lib/configure-openapi';
 import { createApp } from './lib/create-app';
 import index from './routes/index.route';
+import restaurants from './routes/restaurants/restaurants.index';
 
 const app = createApp();
 
-const routes = [index];
+const routes = [index, restaurants];
 
 configureOpenApi(app);
 routes.forEach((route) => {
