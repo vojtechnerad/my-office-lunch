@@ -7,3 +7,10 @@ export const users = pgTable('users', {
   name: varchar('name', { length: 100 }).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+export const restaurants = pgTable('restaurants', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  name: varchar('name', { length: 255 }).notNull(),
+  url: varchar('url', { length: 255 }),
+  dailyMenuUrl: varchar('daily_menu_url', { length: 255 }),
+});
