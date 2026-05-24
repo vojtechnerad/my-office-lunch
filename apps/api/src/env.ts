@@ -2,6 +2,8 @@ import z from 'zod';
 
 const EnvSchema = z.object({
   PORT: z.coerce.number().default(3000),
+  BETTER_AUTH_URL: z.url(),
+  BETTER_AUTH_SECRET: z.string(),
   // LOG_LEVEL: z.enum(['error', 'warn', 'info', 'debug']),
 });
 

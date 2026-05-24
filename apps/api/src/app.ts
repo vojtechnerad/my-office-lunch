@@ -2,10 +2,13 @@ import configureOpenApi from './lib/configure-openapi';
 import { createApp } from './lib/create-app';
 import index from './routes/index.route';
 import restaurants from './routes/restaurants/restaurants.index';
+import auth from './routes/auth/auth.index';
 
 const app = createApp();
 
-const routes = [index, restaurants];
+// app.on(['POST', 'GET'], '/api/auth/*', (c) => auth.handler(c.req.raw));
+
+const routes = [index, restaurants, auth];
 
 configureOpenApi(app);
 routes.forEach((route) => {

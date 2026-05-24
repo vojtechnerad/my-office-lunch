@@ -1,6 +1,7 @@
 {
   "name": "database",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "bundle": true,
   "sourceRoot": "packages/database/src",
   "projectType": "library",
   "tags": [],
@@ -9,6 +10,7 @@
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "bundle": true,
         "outputPath": "dist/packages/database",
         "tsConfig": "packages/database/tsconfig.lib.json",
         "packageJson": "packages/database/package.json",
