@@ -1,8 +1,11 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { HttpStatusCodes } from '../helpers/http-status-codes.helper';
 
+import type { JwtPayload } from '../helpers/jwt.helper';
+import { AppBindings } from '../types';
+
 export function createRouter() {
-  return new OpenAPIHono({
+  return new OpenAPIHono<AppBindings>({
     strict: true,
     defaultHook: (result, c) => {
       if (!result.success) {

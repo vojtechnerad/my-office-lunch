@@ -2,18 +2,24 @@ import configureOpenApi from './lib/configure-openapi';
 import { createApp } from './lib/create-app';
 import index from './routes/index.route';
 import restaurants from './routes/restaurants/restaurants.index';
+import auth from './routes/auth/auth.index';
+import { authMiddleware } from './middlewares/auth.middleware';
 
 const app = createApp();
 
-const routes = [index, restaurants];
+const publicRoutes = [auth];
+const protectedRoutes = [index, restaurants];
 
 configureOpenApi(app);
-routes.forEach((route) => {
+
+publicRoutes.forEach((route) => {
   app.route('/', route);
 });
 
-app.get('/', (c) => {
-  return c.text('Hello Hono in Nx Monorepo!');
+app.use('*', authMiddleware);
+
+protectedRoutes.forEach((route) => {
+  app.route('/', route);
 });
 
 app.notFound((c) => {

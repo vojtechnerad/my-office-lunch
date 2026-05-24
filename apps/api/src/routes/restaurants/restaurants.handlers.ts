@@ -5,8 +5,9 @@ import {
 } from './restaurants.routes';
 import { db, DbSchema } from 'database';
 import { eq } from 'drizzle-orm';
+import { AppRouteHandler } from '../../types';
 
-export const createRestaurantHandler: RouteHandler<
+export const createRestaurantHandler: AppRouteHandler<
   CreateRestaurantRoute
 > = async (c) => {
   const restaurant = c.req.valid('json');
@@ -17,7 +18,7 @@ export const createRestaurantHandler: RouteHandler<
   return c.json(inserted);
 };
 
-export const deleteRestaurantHandler: RouteHandler<
+export const deleteRestaurantHandler: AppRouteHandler<
   DeleteRestaurantRoute
 > = async (c) => {
   const { id } = c.req.valid('param');
