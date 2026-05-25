@@ -1,0 +1,16 @@
+<nz-list nzBordered nzHeader="Header" nzFooter="Footer">
+  @for (item of groups(); track item.id) {
+  <nz-list-item>
+    <!-- <span nz-typography><mark>[ITEM]</mark></span> -->
+    <div>
+      <div>{{ item.name }}</div>
+      <div>{{ item.adminUserId }}</div>
+    </div>
+
+    <div>
+      <span>Members: TODO</span>
+      <span>→</span>
+    </div>
+  </nz-list-item>
+  }
+</nz-list>

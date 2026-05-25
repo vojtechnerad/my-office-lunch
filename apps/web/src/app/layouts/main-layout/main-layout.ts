@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
 
 @Component({
   selector: 'mol-main-layout',
@@ -14,6 +15,8 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     NzLayoutModule,
     NzPageHeaderModule,
     NzSpaceModule,
+    NzMenuModule,
+    RouterModule,
   ],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
