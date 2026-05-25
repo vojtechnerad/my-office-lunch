@@ -4,8 +4,19 @@ import index from './routes/index.route';
 import restaurants from './routes/restaurants/restaurants.index';
 import auth from './routes/auth/auth.index';
 import { authMiddleware } from './middlewares/auth.middleware';
+import { cors } from 'hono/cors';
 
 const app = createApp();
+
+app.use(
+  '*',
+  cors({
+    origin: '*',
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  }),
+);
 
 const publicRoutes = [auth];
 const protectedRoutes = [index, restaurants];
