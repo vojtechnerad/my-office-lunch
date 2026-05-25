@@ -1,4 +1,10 @@
-import { pgTable, uuid, varchar, timestamp } from 'drizzle-orm/pg-core';
+import {
+  pgTable,
+  uuid,
+  varchar,
+  timestamp,
+  primaryKey,
+} from 'drizzle-orm/pg-core';
 
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -14,3 +20,27 @@ export const restaurants = pgTable('restaurants', {
   url: varchar('url', { length: 255 }),
   dailyMenuUrl: varchar('daily_menu_url', { length: 255 }),
 });
+
+export const groups = pgTable('groups', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  name: varchar('name', { length: 255 }).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  adminUserId: uuid('admin_user_id')
+    .notNull()
+    .references(() => users.id),
+});
+
+export const usersToGroups = pgTable(
+  'users_to_groups',
+  {
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id),
+    groupId: uuid('group_id')
+      .notNull()
+      .references(() => groups.id),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.userId, t.groupId] }),
+  }),
+);

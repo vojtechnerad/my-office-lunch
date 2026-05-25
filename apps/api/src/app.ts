@@ -3,6 +3,7 @@ import { createApp } from './lib/create-app';
 import index from './routes/index.route';
 import restaurants from './routes/restaurants/restaurants.index';
 import auth from './routes/auth/auth.index';
+import groups from './routes/groups/groups.index';
 import { authMiddleware } from './middlewares/auth.middleware';
 import { cors } from 'hono/cors';
 
@@ -19,7 +20,7 @@ app.use(
 );
 
 const publicRoutes = [auth];
-const protectedRoutes = [index, restaurants];
+const protectedRoutes = [index, restaurants, groups];
 
 configureOpenApi(app);
 
