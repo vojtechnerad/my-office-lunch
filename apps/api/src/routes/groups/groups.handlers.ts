@@ -1,6 +1,7 @@
 import { db, DbSchema } from 'database';
 import { AppRouteHandler } from '../../types';
 import {
+  AddFavoriteRestaurantToGroupRoute,
   CreateGroupRoute,
   GetGroupByIdRoute,
   JoinGroupRoute,
@@ -105,4 +106,47 @@ export const myGroupsHandler: AppRouteHandler<MyGroupsRoute> = async (c) => {
   const groups = membershipsWithGroups.map((row) => row.groups);
 
   return c.json(groups, HttpStatusCodes.OK);
+};
+
+export const addFavoriteRestaurantToGroupHandler: AppRouteHandler<
+  AddFavoriteRestaurantToGroupRoute
+> = async (c) => {
+  const { groupId, restaurantId } = c.req.valid('param');
+
+  // Check if group exists
+  const [group] = await db
+    .select()
+    .from(DbSchema.groups)
+    .where(eq(DbSchema.groups.id, groupId))
+    .limit(1);
+
+  if (!group) {
+    return c.json({ message: 'Group not found' }, HttpStatusCodes.NOT_FOUND);
+  }
+
+  console.log(group);
+
+  // Check if restaurant exists
+  const [restaurant] = await db
+    .select()
+    .from(DbSchema.restaurants)
+    .where(eq(DbSchema.restaurants.id, restaurantId))
+    .limit(1);
+
+  if (!restaurant) {
+    return c.json(
+      { message: 'Restaurant not found' },
+      HttpStatusCodes.NOT_FOUND,
+    );
+  }
+
+  console.log(restaurant);
+
+  // Add favorite restaurant to group
+  const [newFavorite] = await db
+    .insert(DbSchema.groupsToFavoriteRestaurants)
+    .values({ groupId, restaurantId })
+    .returning();
+
+  return c.json(newFavorite, HttpStatusCodes.OK);
 };
