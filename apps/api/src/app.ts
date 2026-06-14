@@ -4,11 +4,9 @@ import index from './routes/index.route';
 import restaurants from './routes/restaurants/restaurants.index';
 import auth from './routes/auth/auth.index';
 import groups from './routes/groups/groups.index';
+import websockets from './routes/websockets/websockets.index';
 import { authMiddleware } from './middlewares/auth.middleware';
 import { cors } from 'hono/cors';
-import { HttpStatusCodes } from './helpers/http-status-codes.helper';
-import { jsonContent } from './helpers/openapi.helper';
-import { createRoute, z } from '@hono/zod-openapi';
 
 const baseApp = createApp();
 
@@ -33,7 +31,8 @@ protectedAppRoutes.use('*', authMiddleware);
 const protectedRoutes = protectedAppRoutes
   .route('/', index)
   .route('/', restaurants)
-  .route('/', groups);
+  .route('/', groups)
+  .route('/', websockets);
 
 const app = appWithRoutes.route('/', auth).route('/', protectedRoutes);
 
