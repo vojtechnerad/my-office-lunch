@@ -24,7 +24,7 @@ baseApp.use(
 
 configureOpenApi(baseApp);
 
-const appWithRoutes = createApp();
+const appWithRoutes = baseApp;
 
 const protectedAppRoutes = createApp();
 
