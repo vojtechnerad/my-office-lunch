@@ -1,1 +1,13 @@
-<p>restaurants works!</p>
+<nz-list nzBordered>
+  @for (item of restaurants(); track item.id) {
+  <nz-list-item>
+    <div>
+      <div>{{ item.name }}</div>
+    </div>
+
+    <div>
+      <span>Details →</span>
+    </div>
+  </nz-list-item>
+  }
+</nz-list>
