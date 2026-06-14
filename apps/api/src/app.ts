@@ -6,10 +6,13 @@ import auth from './routes/auth/auth.index';
 import groups from './routes/groups/groups.index';
 import { authMiddleware } from './middlewares/auth.middleware';
 import { cors } from 'hono/cors';
+import { HttpStatusCodes } from './helpers/http-status-codes.helper';
+import { jsonContent } from './helpers/openapi.helper';
+import { createRoute, z } from '@hono/zod-openapi';
 
-const app = createApp();
+const baseApp = createApp();
 
-app.use(
+baseApp.use(
   '*',
   cors({
     origin: '*',
@@ -19,20 +22,20 @@ app.use(
   }),
 );
 
-const publicRoutes = [auth];
-const protectedRoutes = [index, restaurants, groups];
+configureOpenApi(baseApp);
 
-configureOpenApi(app);
+const appWithRoutes = createApp();
 
-publicRoutes.forEach((route) => {
-  app.route('/', route);
-});
+const protectedAppRoutes = createApp();
 
-app.use('*', authMiddleware);
+protectedAppRoutes.use('*', authMiddleware);
 
-protectedRoutes.forEach((route) => {
-  app.route('/', route);
-});
+const protectedRoutes = protectedAppRoutes
+  .route('/', index)
+  .route('/', restaurants)
+  .route('/', groups);
+
+const app = appWithRoutes.route('/', auth).route('/', protectedRoutes);
 
 app.notFound((c) => {
   return c.json({ message: `Path ${c.req.path} not found.` }, 404);
