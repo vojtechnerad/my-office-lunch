@@ -4,6 +4,7 @@ import { authGuard } from './core/auth/auth.guard';
 import { MainLayout } from './layouts/main-layout/main-layout';
 import { Groups } from './features/groups/groups';
 import { GroupVoting } from './features/group-voting/pages/group-voting';
+import { Restaurants } from './features/restaurants/page/restaurants';
 
 export const appRoutes: Route[] = [
   { path: 'auth', component: Auth },
@@ -15,6 +16,7 @@ export const appRoutes: Route[] = [
     children: [
       { path: 'group-voting/:groupId', component: GroupVoting },
       { path: 'groups', component: Groups },
+      { path: 'restaurants', component: Restaurants },
     ],
   },
 
