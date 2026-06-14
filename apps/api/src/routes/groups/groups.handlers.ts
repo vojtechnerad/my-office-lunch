@@ -3,9 +3,9 @@ import { AppRouteHandler } from '../../types';
 import {
   CreateGroupRoute,
   GetGroupByIdRoute,
-  joinGroup,
   JoinGroupRoute,
   ListGroupsRoute,
+  MyGroupsRoute,
 } from './groups.routes';
 import { and, eq } from 'drizzle-orm';
 import { HttpStatusCodes } from '../../helpers/http-status-codes.helper';
@@ -88,4 +88,21 @@ export const joinGroupHandler: AppRouteHandler<JoinGroupRoute> = async (c) => {
     .returning();
 
   return c.json(newMembership, HttpStatusCodes.OK);
+};
+
+export const myGroupsHandler: AppRouteHandler<MyGroupsRoute> = async (c) => {
+  const userId = c.var.jwtPayload.sub;
+
+  const membershipsWithGroups = await db
+    .select()
+    .from(DbSchema.groups)
+    .innerJoin(
+      DbSchema.usersToGroups,
+      eq(DbSchema.usersToGroups.groupId, DbSchema.groups.id),
+    )
+    .where(eq(DbSchema.usersToGroups.userId, userId));
+
+  const groups = membershipsWithGroups.map((row) => row.groups);
+
+  return c.json(groups, HttpStatusCodes.OK);
 };

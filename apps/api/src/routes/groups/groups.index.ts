@@ -4,6 +4,7 @@ import * as handlers from './groups.handlers';
 
 const router = createRouter()
   .openapi(routes.listGroups, handlers.listGroupsHandler)
+  .openapi(routes.myGroups, handlers.myGroupsHandler)
   .openapi(routes.getGroupById, handlers.getGroupByIdHandler)
   .openapi(routes.createGroup, handlers.createGroupHandler)
   .openapi(routes.joinGroup, handlers.joinGroupHandler);

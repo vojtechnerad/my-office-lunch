@@ -49,7 +49,7 @@ export const getGroupById = createRoute({
   description: 'Get group by ID',
   request: {
     params: z.object({
-      groupId: z.string(),
+      groupId: z.string().uuid(),
     }),
   },
   responses: {
@@ -68,7 +68,7 @@ export const joinGroup = createRoute({
   description: 'Join a group',
   request: {
     params: z.object({
-      groupId: z.string(),
+      groupId: z.uuid(),
     }),
   },
   responses: {
@@ -87,7 +87,21 @@ export const joinGroup = createRoute({
   },
 });
 
+export const myGroups = createRoute({
+  path: '/groups/my',
+  method: 'get',
+  tags,
+  description: 'Get groups of the current user',
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(
+      z.array(z.object({})),
+      'List of user groups',
+    ),
+  },
+});
+
 export type CreateGroupRoute = typeof createGroup;
 export type ListGroupsRoute = typeof listGroups;
 export type GetGroupByIdRoute = typeof getGroupById;
 export type JoinGroupRoute = typeof joinGroup;
+export type MyGroupsRoute = typeof myGroups;
