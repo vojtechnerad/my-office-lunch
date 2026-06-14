@@ -23,6 +23,7 @@
     "ng-zorro-antd": "^21.3.0",
     "pg": "^8.21.0",
     "rxjs": "~7.8.0",
+    "ws": "^8.21.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -48,6 +49,7 @@
     "@types/bcrypt": "^6.0.0",
     "@types/node": "20.19.9",
     "@types/pg": "^8.20.0",
+    "@types/ws": "^8.18.1",
     "@typescript-eslint/utils": "^8.40.0",
     "angular-eslint": "^21.2.0",
     "autoprefixer": "^10.4.0",
