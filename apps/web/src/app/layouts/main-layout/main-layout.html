@@ -12,6 +12,13 @@
   <nz-layout>
     <nz-sider>
       <ul nz-menu nzMode="inline">
+        @for (group of myGroups(); track group.id) {
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/group-voting/{{ group.id }}">{{ group.name }}</a>
+        </li>
+
+        }
+
         <li nz-menu-item nzMatchRouter>
           <a routerLink="/groups">Groups</a>
         </li>

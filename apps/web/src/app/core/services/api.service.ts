@@ -22,6 +22,12 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/groups/${groupId}/join`, {});
   }
 
+  public myGroups() {
+    return this.http.get<Array<{ id: string; name: string }>>(
+      `${this.apiUrl}/groups/my`,
+    );
+  }
+
   public getRestaurants(): Observable<Array<{ id: string; name: string }>> {
     return this.http.get<Array<{ id: string; name: string }>>(
       `${this.apiUrl}/restaurants`,
