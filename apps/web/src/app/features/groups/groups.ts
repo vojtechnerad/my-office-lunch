@@ -7,10 +7,11 @@ import {
 } from '@angular/core';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { ApiService } from '../../core/services/api.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'mol-groups',
-  imports: [NzListModule],
+  imports: [RouterModule, NzListModule],
   templateUrl: './groups.html',
   styleUrl: './groups.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

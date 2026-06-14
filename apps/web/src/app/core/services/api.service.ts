@@ -14,15 +14,21 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/groups`);
   }
 
+  public getGroupById(groupId: string) {
+    return this.http.get(`${this.apiUrl}/groups/${groupId}`);
+  }
+
+  public joinGroup(groupId: string) {
+    return this.http.post(`${this.apiUrl}/groups/${groupId}/join`, {});
+  }
+
   public getRestaurants(): Observable<Array<{ id: string; name: string }>> {
     return this.http.get<Array<{ id: string; name: string }>>(
       `${this.apiUrl}/restaurants`,
     );
   }
 
-  public getRestaurantDetails(
-    restaurantId: string,
-  ): Observable<{
+  public getRestaurantDetails(restaurantId: string): Observable<{
     id: string;
     name: string;
     dailyMenuUrl?: string;
