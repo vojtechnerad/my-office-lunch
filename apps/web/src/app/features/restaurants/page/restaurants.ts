@@ -7,10 +7,11 @@ import {
 } from '@angular/core';
 import { ApiService } from '../../../core/services/api.service';
 import { NzListModule } from 'ng-zorro-antd/list';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'mol-restaurants',
-  imports: [NzListModule],
+  imports: [RouterModule, NzListModule],
   templateUrl: './restaurants.html',
   styleUrl: './restaurants.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

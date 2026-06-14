@@ -5,6 +5,7 @@ import { MainLayout } from './layouts/main-layout/main-layout';
 import { Groups } from './features/groups/groups';
 import { GroupVoting } from './features/group-voting/pages/group-voting';
 import { Restaurants } from './features/restaurants/page/restaurants';
+import { RestaurantDetails } from './features/restaurant-details/page/restaurant-details';
 
 export const appRoutes: Route[] = [
   { path: 'auth', component: Auth },
@@ -17,6 +18,7 @@ export const appRoutes: Route[] = [
       { path: 'group-voting/:groupId', component: GroupVoting },
       { path: 'groups', component: Groups },
       { path: 'restaurants', component: Restaurants },
+      { path: 'restaurants/:restaurantId', component: RestaurantDetails },
     ],
   },
 

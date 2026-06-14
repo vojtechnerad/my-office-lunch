@@ -19,4 +19,20 @@ export class ApiService {
       `${this.apiUrl}/restaurants`,
     );
   }
+
+  public getRestaurantDetails(
+    restaurantId: string,
+  ): Observable<{
+    id: string;
+    name: string;
+    dailyMenuUrl?: string;
+    url?: string;
+  }> {
+    return this.http.get<{
+      id: string;
+      name: string;
+      dailyMenuUrl?: string;
+      url?: string;
+    }>(`${this.apiUrl}/restaurants/${restaurantId}`);
+  }
 }
