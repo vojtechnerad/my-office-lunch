@@ -45,7 +45,34 @@ export const getGroupByIdHandler: AppRouteHandler<GetGroupByIdRoute> = async (
     return c.json({ message: 'Group not found' }, HttpStatusCodes.NOT_FOUND);
   }
 
-  return c.json(group);
+  const favoriteRestaurants = await db
+    .select()
+    .from(DbSchema.groupsToFavoriteRestaurants)
+    .where(eq(DbSchema.groupsToFavoriteRestaurants.groupId, groupId))
+    .leftJoin(
+      DbSchema.restaurants,
+      eq(
+        DbSchema.groupsToFavoriteRestaurants.restaurantId,
+        DbSchema.restaurants.id,
+      ),
+    )
+    .then((rows) => rows.map((row) => row.restaurants));
+
+  const members = await db
+    .select()
+    .from(DbSchema.usersToGroups)
+    .where(eq(DbSchema.usersToGroups.groupId, groupId))
+    .leftJoin(
+      DbSchema.users,
+      eq(DbSchema.usersToGroups.userId, DbSchema.users.id),
+    )
+    .then((rows) => rows.map((row) => row.users));
+
+  return c.json({
+    ...group,
+    favoriteRestaurants: favoriteRestaurants,
+    members: members,
+  });
 };
 
 export const joinGroupHandler: AppRouteHandler<JoinGroupRoute> = async (c) => {
