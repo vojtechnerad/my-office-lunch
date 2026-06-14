@@ -40,7 +40,5 @@ export const usersToGroups = pgTable(
       .notNull()
       .references(() => groups.id),
   },
-  (t) => ({
-    pk: primaryKey({ columns: [t.userId, t.groupId] }),
-  }),
+  (t) => [primaryKey({ columns: [t.userId, t.groupId] })],
 );
