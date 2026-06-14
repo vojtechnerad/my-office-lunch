@@ -61,6 +61,33 @@ export const getGroupById = createRoute({
   },
 });
 
+export const joinGroup = createRoute({
+  path: '/groups/{groupId}/join',
+  method: 'post',
+  tags,
+  description: 'Join a group',
+  request: {
+    params: z.object({
+      groupId: z.string(),
+    }),
+  },
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(
+      z.object({}),
+      'Joined group successfully',
+    ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      z.object({ message: z.string() }),
+      'Group not found',
+    ),
+    [HttpStatusCodes.BAD_REQUEST]: jsonContent(
+      z.object({ message: z.string() }),
+      'User is already a member',
+    ),
+  },
+});
+
 export type CreateGroupRoute = typeof createGroup;
 export type ListGroupsRoute = typeof listGroups;
 export type GetGroupByIdRoute = typeof getGroupById;
+export type JoinGroupRoute = typeof joinGroup;
