@@ -21,6 +21,34 @@ export const listRestaurants = createRoute({
   },
 });
 
+export const restaurantDetails = createRoute({
+  path: '/restaurants/{id}',
+  method: 'get',
+  tags,
+  request: {
+    params: z.object({
+      id: z.string(),
+    }),
+    description: 'Get restaurant details by ID',
+    required: true,
+  },
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+      }),
+      'Restaurant details',
+    ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      z.object({
+        message: z.string(),
+      }),
+      'Restaurant not found',
+    ),
+  },
+});
+
 export const createRestaurant = createRoute({
   path: '/restaurants',
   method: 'post',
@@ -71,5 +99,6 @@ export const deleteRestaurant = createRoute({
 });
 
 export type ListRestaurantsRoute = typeof listRestaurants;
+export type RestaurantDetailsRoute = typeof restaurantDetails;
 export type CreateRestaurantRoute = typeof createRestaurant;
 export type DeleteRestaurantRoute = typeof deleteRestaurant;

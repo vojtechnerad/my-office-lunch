@@ -3,6 +3,7 @@ import {
   CreateRestaurantRoute,
   DeleteRestaurantRoute,
   ListRestaurantsRoute,
+  RestaurantDetailsRoute,
 } from './restaurants.routes';
 import { db, DbSchema } from 'database';
 import { eq } from 'drizzle-orm';
@@ -16,6 +17,23 @@ export const listRestaurantsHandler: AppRouteHandler<
     .from(DbSchema.restaurants);
 
   return c.json(restaurants);
+};
+
+export const restaurantDetailsHandler: AppRouteHandler<
+  RestaurantDetailsRoute
+> = async (c) => {
+  const { id } = c.req.valid('param');
+  const [restaurant] = await db
+    .select()
+    .from(DbSchema.restaurants)
+    .where(eq(DbSchema.restaurants.id, id))
+    .limit(1);
+
+  if (!restaurant) {
+    return c.json({ message: `Restaurant with ID ${id} not found` });
+  }
+
+  return c.json(restaurant);
 };
 
 export const createRestaurantHandler: AppRouteHandler<

@@ -4,6 +4,7 @@ import * as handlers from './restaurants.handlers';
 
 const router = createRouter()
   .openapi(routes.listRestaurants, handlers.listRestaurantsHandler)
+  .openapi(routes.restaurantDetails, handlers.restaurantDetailsHandler)
   .openapi(routes.createRestaurant, handlers.createRestaurantHandler)
   .openapi(routes.deleteRestaurant, handlers.deleteRestaurantHandler);
 
