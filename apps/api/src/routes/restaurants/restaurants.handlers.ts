@@ -2,10 +2,21 @@ import { RouteHandler } from '@hono/zod-openapi';
 import {
   CreateRestaurantRoute,
   DeleteRestaurantRoute,
+  ListRestaurantsRoute,
 } from './restaurants.routes';
 import { db, DbSchema } from 'database';
 import { eq } from 'drizzle-orm';
 import { AppRouteHandler } from '../../types';
+
+export const listRestaurantsHandler: AppRouteHandler<
+  ListRestaurantsRoute
+> = async (c) => {
+  const restaurants = await db
+    .select({ id: DbSchema.restaurants.id, name: DbSchema.restaurants.name })
+    .from(DbSchema.restaurants);
+
+  return c.json(restaurants);
+};
 
 export const createRestaurantHandler: AppRouteHandler<
   CreateRestaurantRoute

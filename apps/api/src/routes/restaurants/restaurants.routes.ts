@@ -4,6 +4,23 @@ import { jsonContent } from '../../helpers/openapi.helper';
 
 const tags = ['Restaurants'];
 
+export const listRestaurants = createRoute({
+  path: '/restaurants',
+  method: 'get',
+  tags,
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(
+      z.array(
+        z.object({
+          id: z.string(),
+          name: z.string(),
+        }),
+      ),
+      'List of restaurants',
+    ),
+  },
+});
+
 export const createRestaurant = createRoute({
   path: '/restaurants',
   method: 'post',
@@ -53,5 +70,6 @@ export const deleteRestaurant = createRoute({
   },
 });
 
+export type ListRestaurantsRoute = typeof listRestaurants;
 export type CreateRestaurantRoute = typeof createRestaurant;
 export type DeleteRestaurantRoute = typeof deleteRestaurant;
