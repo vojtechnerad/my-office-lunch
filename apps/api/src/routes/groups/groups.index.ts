@@ -7,6 +7,10 @@ const router = createRouter()
   .openapi(routes.myGroups, handlers.myGroupsHandler)
   .openapi(routes.getGroupById, handlers.getGroupByIdHandler)
   .openapi(routes.createGroup, handlers.createGroupHandler)
-  .openapi(routes.joinGroup, handlers.joinGroupHandler);
+  .openapi(routes.joinGroup, handlers.joinGroupHandler)
+  .openapi(
+    routes.addFavoriteRestaurantToGroup,
+    handlers.addFavoriteRestaurantToGroupHandler,
+  );
 
 export default router;

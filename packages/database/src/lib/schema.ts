@@ -42,3 +42,16 @@ export const usersToGroups = pgTable(
   },
   (t) => [primaryKey({ columns: [t.userId, t.groupId] })],
 );
+
+export const groupsToFavoriteRestaurants = pgTable(
+  'groups_to_favorite_restaurants',
+  {
+    groupId: uuid('group_id')
+      .notNull()
+      .references(() => groups.id),
+    restaurantId: uuid('restaurant_id')
+      .notNull()
+      .references(() => restaurants.id),
+  },
+  (t) => [primaryKey({ columns: [t.groupId, t.restaurantId] })],
+);

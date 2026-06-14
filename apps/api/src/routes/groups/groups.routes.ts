@@ -100,8 +100,33 @@ export const myGroups = createRoute({
   },
 });
 
+export const addFavoriteRestaurantToGroup = createRoute({
+  path: '/groups/{groupId}/add-favorite-restaurant/{restaurantId}',
+  method: 'post',
+  tags,
+  description: 'Add a favorite restaurant to a group',
+  request: {
+    params: z.object({
+      groupId: z.uuid(),
+      restaurantId: z.uuid(),
+    }),
+  },
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(
+      z.object({}),
+      'Added favorite restaurant to group successfully',
+    ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      z.object({ message: z.string() }),
+      'Group or restaurant not found',
+    ),
+  },
+});
+
 export type CreateGroupRoute = typeof createGroup;
 export type ListGroupsRoute = typeof listGroups;
 export type GetGroupByIdRoute = typeof getGroupById;
 export type JoinGroupRoute = typeof joinGroup;
 export type MyGroupsRoute = typeof myGroups;
+export type AddFavoriteRestaurantToGroupRoute =
+  typeof addFavoriteRestaurantToGroup;
