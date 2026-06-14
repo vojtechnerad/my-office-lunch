@@ -11,7 +11,7 @@
 
   <nz-layout>
     <nz-sider>
-      <ul nz-menu nzMode="inline">
+      <ul nz-menu nzMode="inline" style="height: 100%">
         @for (group of myGroups(); track group.id) {
         <li nz-menu-item nzMatchRouter>
           <a routerLink="/group-voting/{{ group.id }}">{{ group.name }}</a>
