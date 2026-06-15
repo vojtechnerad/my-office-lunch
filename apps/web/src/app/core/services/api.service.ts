@@ -34,6 +34,14 @@ export class ApiService {
     );
   }
 
+  public createRestaurant(restaurant: {
+    name: string;
+    url: string;
+    dailyMenuUrl: string;
+  }) {
+    return this.http.post(`${this.apiUrl}/restaurants`, restaurant);
+  }
+
   public getRestaurantDetails(restaurantId: string): Observable<{
     id: string;
     name: string;
@@ -46,5 +54,9 @@ export class ApiService {
       dailyMenuUrl?: string;
       url?: string;
     }>(`${this.apiUrl}/restaurants/${restaurantId}`);
+  }
+
+  public deleteRestaurant(restaurantId: string) {
+    return this.http.delete(`${this.apiUrl}/restaurants/${restaurantId}`);
   }
 }

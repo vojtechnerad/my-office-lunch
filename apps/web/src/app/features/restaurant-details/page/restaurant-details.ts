@@ -7,10 +7,11 @@ import {
 } from '@angular/core';
 import { ApiService } from '../../../core/services/api.service';
 import { ActivatedRoute } from '@angular/router';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'mol-restaurant-details',
-  imports: [],
+  imports: [NzButtonModule],
   templateUrl: './restaurant-details.html',
   styleUrl: './restaurant-details.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,6 +36,14 @@ export class RestaurantDetails implements OnInit {
         .subscribe((restaurant) => {
           this.restaurant.set(restaurant);
         });
+    }
+  }
+
+  protected handleDeleteRestaurant(restaurantId: string | undefined): void {
+    if (restaurantId) {
+      this.apiService.deleteRestaurant(restaurantId).subscribe(() => {
+        this.restaurant.set(null);
+      });
     }
   }
 }

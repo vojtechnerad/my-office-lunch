@@ -1,3 +1,7 @@
+<button nz-button nzType="primary" (click)="handleClickNewRestaurant()">
+  Add new
+</button>
+
 <nz-list nzBordered>
   @for (item of restaurants(); track item.id) {
   <nz-list-item>

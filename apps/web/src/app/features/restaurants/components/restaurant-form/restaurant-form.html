@@ -1,0 +1,30 @@
+<form #restarantForm nz-form nzLayout="vertical" [formGroup]="validateForm">
+  <!-- Name -->
+  <nz-form-item>
+    <nz-form-label nzFor="name" nzRequired>Name</nz-form-label>
+    <nz-form-control nzErrorTip="Please fill in restaurant name">
+      <input type="text" formControlName="name" nz-input id="name" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- URL -->
+  <nz-form-item>
+    <nz-form-label nzFor="url">URL</nz-form-label>
+    <nz-form-control>
+      <input type="text" formControlName="url" nz-input id="url" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Daily Menu URL -->
+  <nz-form-item>
+    <nz-form-label nzFor="dailyMenuUrl">Daily Menu URL</nz-form-label>
+    <nz-form-control>
+      <input
+        type="text"
+        formControlName="dailyMenuUrl"
+        nz-input
+        id="dailyMenuUrl"
+      />
+    </nz-form-control>
+  </nz-form-item>
+</form>

@@ -2,5 +2,13 @@
 <h1>{{ restaurant()?.name }}</h1>
 <p>{{ restaurant()?.url }}</p>
 <p>{{ restaurant()?.dailyMenuUrl }}</p>
-
 }
+
+<button
+  nz-button
+  nzType="primary"
+  nzDanger
+  (click)="handleDeleteRestaurant(restaurant()?.id)"
+>
+  Delete
+</button>
