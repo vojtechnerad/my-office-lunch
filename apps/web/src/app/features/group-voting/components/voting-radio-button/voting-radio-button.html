@@ -1,0 +1,12 @@
+<!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
+<nz-radio-group [(ngModel)]="selectedValue">
+  <label nz-radio-button nzValue="preferred" class="bg-red">Preferuji</label>
+  <label nz-radio-button nzValue="neutral">Klidně</label>
+  <label nz-radio-button nzValue="unwanted">Nechci</label>
+</nz-radio-group>
+
+@if (selectedValue()) {
+<button nz-button nzType="text" nzDanger (click)="deselectValue()">
+  <nz-icon nzType="close" nzTheme="outline" />
+</button>
+}

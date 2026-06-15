@@ -8,10 +8,11 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { CommonModule } from '@angular/common';
+import { VotingRadioButton } from '../components/voting-radio-button/voting-radio-button';
 
 @Component({
   selector: 'mol-group-voting',
-  imports: [CommonModule],
+  imports: [CommonModule, VotingRadioButton],
   templateUrl: './group-voting.html',
   styleUrl: './group-voting.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
