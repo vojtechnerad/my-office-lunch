@@ -1,7 +1,13 @@
-<input nz-input placeholder="Email" [(ngModel)]="email" />
+<div class="flex flex-col gap-8">
+  <h1 class="text-5xl">🍽️ My Office Lunch</h1>
 
-<nz-input-password>
-  <input nz-input placeholder="Password" [(ngModel)]="password" />
-</nz-input-password>
+  <div class="w-[450px]">
+    <input nz-input placeholder="Email" [(ngModel)]="email" />
 
-<button nz-button nzType="primary" (click)="signIn()">Sign In</button>
+    <nz-input-password>
+      <input nz-input placeholder="Password" [(ngModel)]="password" />
+    </nz-input-password>
+
+    <button nz-button nzType="primary" (click)="signIn()">Sign In</button>
+  </div>
+</div>

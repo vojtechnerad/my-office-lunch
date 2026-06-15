@@ -21,6 +21,9 @@ import { AuthService } from '../../core/auth/auth.service';
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'grid place-items-center h-screen',
+  },
 })
 export class Auth {
   private authService = inject(AuthService);
