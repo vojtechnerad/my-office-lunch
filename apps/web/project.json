@@ -23,6 +23,11 @@
         "styles": ["apps/web/src/styles.scss"]
       },
       "configurations": {
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        },
         "production": {
           "budgets": [
             {
@@ -37,11 +42,6 @@
             }
           ],
           "outputHashing": "all"
-        },
-        "development": {
-          "optimization": false,
-          "extractLicenses": false,
-          "sourceMap": true
         }
       },
       "defaultConfiguration": "production"
@@ -53,11 +53,11 @@
         "port": 5173
       },
       "configurations": {
-        "production": {
-          "buildTarget": "web:build:production"
-        },
         "development": {
           "buildTarget": "web:build:development"
+        },
+        "production": {
+          "buildTarget": "web:build:production"
         }
       },
       "defaultConfiguration": "development"
