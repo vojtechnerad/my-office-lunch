@@ -1,0 +1,10 @@
+<div class="text-xl">{{ restaurant().name }}</div>
+@if (restaurant().url) {
+<a nz-button nzType="dashed" [href]="restaurant().url" target="_blank">
+  Website
+</a>
+} @if (restaurant().dailyMenuUrl) {
+<a nz-button nzType="dashed" [href]="restaurant().dailyMenuUrl" target="_blank">
+  Daily Menu
+</a>
+}

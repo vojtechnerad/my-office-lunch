@@ -1,3 +1,7 @@
 <h1>Group Voting {{ group() | json }}</h1>
 
+@for (restaurant of group()?.favoriteRestaurants; track restaurant.id) {
+<mol-restaurant-row [restaurant]="restaurant" />
+<br />
 <mol-voting-radio-button />
+}
