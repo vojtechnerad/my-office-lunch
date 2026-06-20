@@ -1,6 +1,9 @@
 import z from 'zod';
 
-export function jsonContent(schema: z.ZodType, description: string) {
+export function jsonContent<TSchema extends z.ZodType>(
+  schema: TSchema,
+  description: string,
+) {
   return {
     content: {
       'application/json': {
