@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ListRestaurantsResponse } from 'contracts/restaurants.contracts';
 
 @Injectable({
   providedIn: 'root',
@@ -28,10 +29,8 @@ export class ApiService {
     );
   }
 
-  public getRestaurants(): Observable<Array<{ id: string; name: string }>> {
-    return this.http.get<Array<{ id: string; name: string }>>(
-      `${this.apiUrl}/restaurants`,
-    );
+  public getRestaurants(): Observable<ListRestaurantsResponse> {
+    return this.http.get<ListRestaurantsResponse>(`${this.apiUrl}/restaurants`);
   }
 
   public createRestaurant(restaurant: {

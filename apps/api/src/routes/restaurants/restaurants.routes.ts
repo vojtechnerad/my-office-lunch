@@ -1,6 +1,7 @@
 import { createRoute, z } from '@hono/zod-openapi';
 import { HttpStatusCodes } from '../../helpers/http-status-codes.helper';
 import { jsonContent } from '../../helpers/openapi.helper';
+import { LIST_RESTAURANTS_RESPONSE_SCHEMA } from 'contracts/restaurants.contracts';
 
 const tags = ['Restaurants'];
 
@@ -10,12 +11,7 @@ export const listRestaurants = createRoute({
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      z.array(
-        z.object({
-          id: z.string(),
-          name: z.string(),
-        }),
-      ),
+      LIST_RESTAURANTS_RESPONSE_SCHEMA,
       'List of restaurants',
     ),
   },
