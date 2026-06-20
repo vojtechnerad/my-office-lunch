@@ -48,31 +48,43 @@ export const getGroupByIdHandler: AppRouteHandler<GetGroupByIdRoute> = async (
   const favoriteRestaurants = await db
     .select()
     .from(DbSchema.groupsToFavoriteRestaurants)
-    .where(eq(DbSchema.groupsToFavoriteRestaurants.groupId, groupId))
-    .leftJoin(
+    .innerJoin(
       DbSchema.restaurants,
       eq(
         DbSchema.groupsToFavoriteRestaurants.restaurantId,
         DbSchema.restaurants.id,
       ),
     )
-    .then((rows) => rows.map((row) => row.restaurants));
+    .where(eq(DbSchema.groupsToFavoriteRestaurants.groupId, groupId))
+    .then((rows) =>
+      rows
+        .map((row) => row.restaurants)
+        .filter(
+          (restaurant): restaurant is NonNullable<typeof restaurant> =>
+            restaurant?.id !== null,
+        ),
+    );
 
   const members = await db
-    .select()
+    .select({
+      id: DbSchema.users.id,
+      name: DbSchema.users.name,
+    })
     .from(DbSchema.usersToGroups)
-    .where(eq(DbSchema.usersToGroups.groupId, groupId))
-    .leftJoin(
+    .innerJoin(
       DbSchema.users,
       eq(DbSchema.usersToGroups.userId, DbSchema.users.id),
     )
-    .then((rows) => rows.map((row) => row.users));
+    .where(eq(DbSchema.usersToGroups.groupId, groupId));
 
-  return c.json({
-    ...group,
-    favoriteRestaurants: favoriteRestaurants,
-    members: members,
-  });
+  return c.json(
+    {
+      ...group,
+      favoriteRestaurants: favoriteRestaurants,
+      members: members,
+    },
+    HttpStatusCodes.OK,
+  );
 };
 
 export const joinGroupHandler: AppRouteHandler<JoinGroupRoute> = async (c) => {

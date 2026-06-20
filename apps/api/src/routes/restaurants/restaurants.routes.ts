@@ -2,6 +2,7 @@ import { createRoute, z } from '@hono/zod-openapi';
 import { HttpStatusCodes } from '../../helpers/http-status-codes.helper';
 import { jsonContent } from '../../helpers/openapi.helper';
 import { LIST_RESTAURANTS_RESPONSE_SCHEMA } from 'contracts/restaurants.contracts';
+import { ERROR_RESPONSE_SCHEMA } from 'contracts/errors.contracts';
 
 const tags = ['Restaurants'];
 
@@ -63,7 +64,10 @@ export const createRestaurant = createRoute({
     },
   },
   responses: {
-    [HttpStatusCodes.OK]: jsonContent(z.object({}), 'Create new restaurant'),
+    [HttpStatusCodes.CREATED]: jsonContent(
+      z.object({}),
+      'Create new restaurant',
+    ),
   },
 });
 
@@ -86,9 +90,7 @@ export const deleteRestaurant = createRoute({
       'Restaurant deleted successfully',
     ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
-      z.object({
-        message: z.string(),
-      }),
+      ERROR_RESPONSE_SCHEMA,
       'Restaurant not found',
     ),
   },

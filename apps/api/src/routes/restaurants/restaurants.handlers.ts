@@ -8,12 +8,16 @@ import {
 import { db, DbSchema } from 'database';
 import { eq } from 'drizzle-orm';
 import { AppRouteHandler } from '../../types';
+import { HttpStatusCodes } from '../../helpers/http-status-codes.helper';
 
 export const listRestaurantsHandler: AppRouteHandler<
   ListRestaurantsRoute
 > = async (c) => {
   const restaurants = await db
-    .select({ id: DbSchema.restaurants.id, name: DbSchema.restaurants.name })
+    .select({
+      id: DbSchema.restaurants.id,
+      name: DbSchema.restaurants.name,
+    })
     .from(DbSchema.restaurants);
 
   return c.json(restaurants);
@@ -24,16 +28,22 @@ export const restaurantDetailsHandler: AppRouteHandler<
 > = async (c) => {
   const { id } = c.req.valid('param');
   const [restaurant] = await db
-    .select()
+    .select({
+      id: DbSchema.restaurants.id,
+      name: DbSchema.restaurants.name,
+    })
     .from(DbSchema.restaurants)
     .where(eq(DbSchema.restaurants.id, id))
     .limit(1);
 
   if (!restaurant) {
-    return c.json({ message: `Restaurant with ID ${id} not found` });
+    return c.json(
+      { message: `Restaurant with ID ${id} not found` },
+      HttpStatusCodes.NOT_FOUND,
+    );
   }
 
-  return c.json(restaurant);
+  return c.json(restaurant, HttpStatusCodes.OK);
 };
 
 export const createRestaurantHandler: AppRouteHandler<
@@ -44,7 +54,8 @@ export const createRestaurantHandler: AppRouteHandler<
     .insert(DbSchema.restaurants)
     .values({ name: restaurant.name })
     .returning();
-  return c.json(inserted);
+
+  return c.json(inserted, HttpStatusCodes.CREATED);
 };
 
 export const deleteRestaurantHandler: AppRouteHandler<

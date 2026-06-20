@@ -1,6 +1,7 @@
 import { createRoute, z } from '@hono/zod-openapi';
 import { HttpStatusCodes } from '../../helpers/http-status-codes.helper';
 import { jsonContent } from '../../helpers/openapi.helper';
+import { GET_GROUP_BY_ID_RESPONSE_SCHEMA } from 'contracts/groups.contracts';
 
 const tags = ['Groups'];
 
@@ -53,7 +54,10 @@ export const getGroupById = createRoute({
     }),
   },
   responses: {
-    [HttpStatusCodes.OK]: jsonContent(z.object({}), 'Group details'),
+    [HttpStatusCodes.OK]: jsonContent(
+      GET_GROUP_BY_ID_RESPONSE_SCHEMA,
+      'Group details',
+    ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       z.object({ message: z.string() }),
       'Group not found',
