@@ -1,10 +1,11 @@
 import { db, DbSchema } from 'database';
-import { signJwt } from '../../helpers/jwt.helper';
+import { signJwt, verifyJwt } from '../../helpers/jwt.helper';
 import bcrypt from 'bcrypt';
 import { AppRouteHandler } from '../../types';
-import { LoginRoute, MeRoute, RegisterRoute } from './auth.routes';
+import { LoginRoute, RegisterRoute } from './auth.routes';
 import { HttpStatusCodes } from '../../helpers/http-status-codes.helper';
 import { and, eq } from 'drizzle-orm';
+import { jwtDecrypt } from 'jose';
 
 export const loginHandler: AppRouteHandler<LoginRoute> = async (c) => {
   const { email, password } = c.req.valid('json');
@@ -43,15 +44,6 @@ export const loginHandler: AppRouteHandler<LoginRoute> = async (c) => {
     },
     HttpStatusCodes.OK,
   );
-};
-
-export const meHandler: AppRouteHandler<MeRoute> = async (c) => {
-  const user = c.get('jwtPayload');
-
-  return c.json({
-    id: user.sub,
-    role: user.role,
-  });
 };
 
 export const registerHandler: AppRouteHandler<RegisterRoute> = async (c) => {

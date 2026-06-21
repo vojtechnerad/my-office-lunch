@@ -1,6 +1,9 @@
 import { createRoute, z } from '@hono/zod-openapi';
 import { HttpStatusCodes } from '../../helpers/http-status-codes.helper';
-import { LOGIN_RESPONSE_SCHEMA } from 'contracts/auth.contracts';
+import {
+  LOGIN_RESPONSE_SCHEMA,
+  ME_RESPONSE_SCHEMA,
+} from 'contracts/auth.contracts';
 import { ERROR_RESPONSE_SCHEMA } from 'contracts/errors.contracts';
 import { jsonContent } from '../../helpers/openapi.helper';
 
@@ -31,24 +34,6 @@ export const loginRoute = createRoute({
   },
 });
 
-export const meRoute = createRoute({
-  method: 'get',
-  path: '/me',
-  responses: {
-    200: {
-      description: 'Current user',
-      content: {
-        'application/json': {
-          schema: z.object({
-            id: z.string(),
-            role: z.string(),
-          }),
-        },
-      },
-    },
-  },
-});
-
 export const registerRoute = createRoute({
   method: 'post',
   path: '/register',
@@ -73,5 +58,4 @@ export const registerRoute = createRoute({
 });
 
 export type LoginRoute = typeof loginRoute;
-export type MeRoute = typeof meRoute;
 export type RegisterRoute = typeof registerRoute;
