@@ -13,12 +13,16 @@ import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { ApiService } from '../../core/services/api.service';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzDropdownModule } from 'ng-zorro-antd/dropdown';
 
 @Component({
   selector: 'mol-main-layout',
   imports: [
     RouterOutlet,
     NzButtonModule,
+    NzDropdownModule,
+    NzIconModule,
     NzLayoutModule,
     NzPageHeaderModule,
     NzSpaceModule,
@@ -31,6 +35,7 @@ import { ApiService } from '../../core/services/api.service';
 })
 export class MainLayout implements OnInit {
   protected myGroups = signal<Array<{ id: string; name: string }>>([]);
+  protected name = localStorage.getItem('name') || '';
 
   private authService = inject(AuthService);
   private apiService = inject(ApiService);
