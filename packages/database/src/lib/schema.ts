@@ -4,6 +4,7 @@ import {
   varchar,
   timestamp,
   primaryKey,
+  text,
 } from 'drizzle-orm/pg-core';
 
 export const users = pgTable('users', {
@@ -19,6 +20,7 @@ export const restaurants = pgTable('restaurants', {
   name: varchar('name', { length: 255 }).notNull(),
   url: varchar('url', { length: 255 }),
   dailyMenuUrl: varchar('daily_menu_url', { length: 255 }),
+  icon: text('icon'),
 });
 
 export const groups = pgTable('groups', {
