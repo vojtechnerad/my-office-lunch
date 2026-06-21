@@ -1,6 +1,11 @@
 <nz-layout style="height: 100%">
   <nz-page-header>
-    <nz-page-header-title>🍽️ My Office Lunch</nz-page-header-title>
+    <nz-page-header-title>
+      <div class="flex items-center gap-3">
+        <img src="mol-logo.svg" alt="My Office Lunch Logo" width="22" />
+        <span class="mb-0.5">My Office Lunch</span>
+      </div>
+    </nz-page-header-title>
 
     <nz-page-header-extra>
       <nz-space>
@@ -13,10 +18,9 @@
     <nz-sider>
       <ul nz-menu nzMode="inline" style="height: 100%">
         @for (group of myGroups(); track group.id) {
-        <li nz-menu-item nzMatchRouter>
-          <a routerLink="/group-voting/{{ group.id }}">{{ group.name }}</a>
-        </li>
-
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/group-voting/{{ group.id }}">{{ group.name }}</a>
+          </li>
         }
 
         <li nz-menu-item nzMatchRouter>
