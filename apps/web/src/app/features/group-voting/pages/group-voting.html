@@ -1,7 +1,26 @@
-<h1>Group Voting {{ group() | json }}</h1>
+@if (group()) {
+  <h1 class="text-4xl">{{ group()?.name }}</h1>
+  @for (restaurant of group()?.favoriteRestaurants; track restaurant.id) {
+    <mol-restaurant-row [restaurant]="restaurant" />
 
-@for (restaurant of group()?.favoriteRestaurants; track restaurant.id) {
-<mol-restaurant-row [restaurant]="restaurant" />
-<br />
-<mol-voting-radio-button />
+    <mol-voting-radio-button
+      (valueChange)="handleVoteChange($event, restaurant.id)"
+    />
+  } @empty {
+    <p>No favorite restaurants available.</p>
+  }
+}
+
+<h2 class="text-2xl mt-8">Voting Results</h2>
+@if (results()) {
+  @for (result of results(); track result.restaurantId) {
+    <div class="flex items-center justify-between p-4 border rounded mb-2">
+      <span>{{ result.restaurantName }}</span>
+      <span class="text-sm text-yellow-500">{{ result.votes.preferred }}</span>
+      <span class="text-sm text-green-500">{{ result.votes.neutral }}</span>
+      <span class="text-sm text-red-500">{{ result.votes.unwanted }}</span>
+    </div>
+  }
+} @else {
+  <p>No votes yet.</p>
 }

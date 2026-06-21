@@ -1,5 +1,8 @@
 import { createRoute, z } from '@hono/zod-openapi';
 import { HttpStatusCodes } from '../../helpers/http-status-codes.helper';
+import { LOGIN_RESPONSE_SCHEMA } from 'contracts/auth.contracts';
+import { ERROR_RESPONSE_SCHEMA } from 'contracts/errors.contracts';
+import { jsonContent } from '../../helpers/openapi.helper';
 
 export const loginRoute = createRoute({
   method: 'post',
@@ -17,26 +20,14 @@ export const loginRoute = createRoute({
     },
   },
   responses: {
-    [HttpStatusCodes.OK]: {
-      content: {
-        'application/json': {
-          schema: z.object({
-            token: z.string(),
-          }),
-        },
-      },
-      description: 'JWT token',
-    },
-    [HttpStatusCodes.UNAUTHORIZED]: {
-      content: {
-        'application/json': {
-          schema: z.object({
-            message: z.string(),
-          }),
-        },
-      },
-      description: 'Invalid email or password',
-    },
+    [HttpStatusCodes.OK]: jsonContent(
+      LOGIN_RESPONSE_SCHEMA,
+      'Successful login with JWT token response and user details',
+    ),
+    [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
+      ERROR_RESPONSE_SCHEMA,
+      'Unauthorized response when email or password is invalid',
+    ),
   },
 });
 

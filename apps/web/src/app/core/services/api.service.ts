@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ListRestaurantsResponse } from 'contracts/restaurants.contracts';
+import { GetGroupByIdResponse } from 'contracts/groups.contracts';
+import { GroupDetails } from '../../shared/types/group.types';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +17,10 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/groups`);
   }
 
-  public getGroupById(groupId: string) {
-    return this.http.get(`${this.apiUrl}/groups/${groupId}`);
+  public getGroupById(groupId: string): Observable<GroupDetails> {
+    return this.http.get<GetGroupByIdResponse>(
+      `${this.apiUrl}/groups/${groupId}`,
+    );
   }
 
   public joinGroup(groupId: string) {
