@@ -32,11 +32,14 @@ export const loginHandler: AppRouteHandler<LoginRoute> = async (c) => {
   const token = await signJwt({
     sub: user.id,
     role: 'user',
+    name: user.name,
   });
 
   return c.json(
     {
       token: token,
+      name: user.name,
+      id: user.id,
     },
     HttpStatusCodes.OK,
   );

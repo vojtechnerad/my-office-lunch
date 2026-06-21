@@ -55,3 +55,20 @@ export const groupsToFavoriteRestaurants = pgTable(
   },
   (t) => [primaryKey({ columns: [t.groupId, t.restaurantId] })],
 );
+
+export const groupRestaurantVotes = pgTable('group_restaurant_votes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  groupId: uuid('group_id')
+    .notNull()
+    .references(() => groups.id),
+  restaurantId: uuid('restaurant_id')
+    .notNull()
+    .references(() => restaurants.id),
+  userId: uuid('user_id')
+    .notNull()
+    .references(() => users.id),
+  vote: varchar('vote', { length: 10 })
+    .$type<'preferred' | 'neutral' | 'unwanted'>()
+    .notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});

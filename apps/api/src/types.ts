@@ -1,5 +1,7 @@
 import { OpenAPIHono, RouteConfig, RouteHandler } from '@hono/zod-openapi';
 import { JwtPayload } from './helpers/jwt.helper';
+import { Server as HttpServer } from 'node:http';
+import { Server as SocketIOServer, Socket } from 'socket.io';
 
 export type AppBindings = {
   Variables: {
@@ -13,3 +15,23 @@ export type AppRouteHandler<R extends RouteConfig> = RouteHandler<
   R,
   AppBindings
 >;
+
+export type AuthenticatedSocketData = {
+  jwtPayload: JwtPayload;
+};
+
+export type AppSocket = Socket<
+  Record<string, never>,
+  Record<string, never>,
+  Record<string, never>,
+  AuthenticatedSocketData
+>;
+
+export type AppSocketServer = SocketIOServer<
+  Record<string, never>,
+  Record<string, never>,
+  Record<string, never>,
+  AuthenticatedSocketData
+>;
+
+export type SocketServerFactory = (httpServer: HttpServer) => AppSocketServer;

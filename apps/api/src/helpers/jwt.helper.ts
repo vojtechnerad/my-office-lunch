@@ -4,8 +4,9 @@ import { env } from '../env';
 const secret = new TextEncoder().encode(env.JWT_SECRET);
 
 export type JwtPayload = {
-  sub: string;
+  name: string;
   role: string;
+  sub: string;
 };
 
 export async function signJwt(payload: JwtPayload) {
