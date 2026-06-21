@@ -1,0 +1,30 @@
+@if (userData()) {
+  <h1 class="text-2xl font-bold mb-4">{{ userData()?.name }}</h1>
+  <div>{{ userData()?.email }}</div>
+  <div>{{ userData()?.role }}</div>
+
+  @if (hasUserGroups()) {
+    <h2 class="text-xl font-semibold mt-4">Groups</h2>
+    <nz-list nzBordered nzSize="small">
+      @for (group of userData()?.userGroups; track group.id) {
+        <nz-list-item>
+          <div>
+            <span>{{ group.name }}</span>
+            @if (group.isAdmin) {
+              <nz-tag nzColor="red">Admin</nz-tag>
+            } @else {
+              <nz-tag nzColor="blue">Member</nz-tag>
+            }
+          </div>
+          <div>
+            <a nz-button nzType="link" routerLink="/groups/{{ group.id }}">
+              Details
+            </a>
+          </div>
+        </nz-list-item>
+      }
+    </nz-list>
+  } @else {
+    <p>No groups found.</p>
+  }
+}

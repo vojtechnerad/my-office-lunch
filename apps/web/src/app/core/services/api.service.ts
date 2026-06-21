@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { ListRestaurantsResponse } from 'contracts/restaurants.contracts';
 import { GetGroupByIdResponse } from 'contracts/groups.contracts';
 import { GroupDetails } from '../../shared/types/group.types';
+import { MeResponse } from 'contracts/auth.contracts';
+import { TUserProfile } from '../../features/user-profile/types/user-profile.types';
 
 @Injectable({
   providedIn: 'root',
@@ -61,5 +63,9 @@ export class ApiService {
 
   public deleteRestaurant(restaurantId: string) {
     return this.http.delete(`${this.apiUrl}/restaurants/${restaurantId}`);
+  }
+
+  public getUserProfile(): Observable<TUserProfile> {
+    return this.http.get<MeResponse>(`${this.apiUrl}/me`);
   }
 }
