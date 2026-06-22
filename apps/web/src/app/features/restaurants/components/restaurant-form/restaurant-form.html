@@ -27,4 +27,24 @@
       />
     </nz-form-control>
   </nz-form-item>
+
+  <!-- Restaurant Icon -->
+  <nz-form-item>
+    <nz-form-label nzFor="icon">Icon</nz-form-label>
+    <nz-form-control>
+      <nz-upload
+        nzName="avatar"
+        nzListType="picture-card"
+        [nzShowUploadList]="false"
+        [nzBeforeUpload]="beforeUpload"
+      >
+        @if (avatarUrl()) {
+          <img [src]="avatarUrl()" style="width: 100%" alt="Náhled fotky" />
+        } @else {
+          <span nz-icon nzType="plus"></span>
+          <div class="ant-upload-text">Nahrát</div>
+        }
+      </nz-upload>
+    </nz-form-control>
+  </nz-form-item>
 </form>

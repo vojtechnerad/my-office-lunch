@@ -1,7 +1,12 @@
 @if (restaurant()) {
-<h1>{{ restaurant()?.name }}</h1>
-<p>{{ restaurant()?.url }}</p>
-<p>{{ restaurant()?.dailyMenuUrl }}</p>
+  <div class="flex items-center gap-2">
+    @if (restaurant()?.icon) {
+      <img [src]="restaurant()?.icon" width="50px" alt="Náhled fotky" />
+    }
+    <h1 class="text-3xl">{{ restaurant()?.name }}</h1>
+  </div>
+  <p>{{ restaurant()?.url }}</p>
+  <p>{{ restaurant()?.dailyMenuUrl }}</p>
 }
 
 <button

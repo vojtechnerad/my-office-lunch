@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ListRestaurantsResponse } from 'contracts/restaurants.contracts';
+import {
+  ListRestaurantsResponse,
+  RestaurantDetailsResponse,
+} from 'contracts/restaurants.contracts';
 import { GetGroupByIdResponse } from 'contracts/groups.contracts';
 import { GroupDetails } from '../../shared/types/group.types';
-import { MeResponse } from 'contracts/auth.contracts';
+import { MeResponse } from 'contracts/user.contracts';
 import { TUserProfile } from '../../features/user-profile/types/user-profile.types';
 
 @Injectable({
@@ -47,18 +50,12 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/restaurants`, restaurant);
   }
 
-  public getRestaurantDetails(restaurantId: string): Observable<{
-    id: string;
-    name: string;
-    dailyMenuUrl?: string;
-    url?: string;
-  }> {
-    return this.http.get<{
-      id: string;
-      name: string;
-      dailyMenuUrl?: string;
-      url?: string;
-    }>(`${this.apiUrl}/restaurants/${restaurantId}`);
+  public getRestaurantDetails(
+    restaurantId: string,
+  ): Observable<RestaurantDetailsResponse> {
+    return this.http.get<RestaurantDetailsResponse>(
+      `${this.apiUrl}/restaurants/${restaurantId}`,
+    );
   }
 
   public deleteRestaurant(restaurantId: string) {

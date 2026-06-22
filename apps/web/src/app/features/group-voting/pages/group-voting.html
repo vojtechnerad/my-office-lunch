@@ -2,6 +2,15 @@
   <h1 class="text-4xl">{{ group()?.name }}</h1>
   @for (restaurant of group()?.favoriteRestaurants; track restaurant.id) {
     <mol-restaurant-row [restaurant]="restaurant" />
+    @if (restaurant.dailyMenuUrl) {
+      <button
+        (click)="
+          handleOpenDailyMenuModal(restaurant.name, restaurant.dailyMenuUrl)
+        "
+      >
+        Daily Menu
+      </button>
+    }
 
     <mol-voting-radio-button
       (valueChange)="handleVoteChange($event, restaurant.id)"

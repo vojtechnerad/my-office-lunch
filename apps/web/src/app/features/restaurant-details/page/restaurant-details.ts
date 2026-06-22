@@ -8,6 +8,7 @@ import {
 import { ApiService } from '../../../core/services/api.service';
 import { ActivatedRoute } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { TRestaurantDetails } from '../types/restaurant-details.type';
 
 @Component({
   selector: 'mol-restaurant-details',
@@ -17,12 +18,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RestaurantDetails implements OnInit {
-  protected readonly restaurant = signal<{
-    id: string;
-    name: string;
-    dailyMenuUrl?: string;
-    url?: string;
-  } | null>(null);
+  protected readonly restaurant = signal<TRestaurantDetails | null>(null);
 
   private readonly route = inject(ActivatedRoute);
   private readonly apiService = inject(ApiService);

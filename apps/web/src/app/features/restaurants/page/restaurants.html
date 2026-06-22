@@ -4,16 +4,19 @@
 
 <nz-list nzBordered>
   @for (item of restaurants(); track item.id) {
-  <nz-list-item>
-    <div>
-      <div>{{ item.name }}</div>
-    </div>
+    <nz-list-item>
+      <div class="flex items-center gap-2">
+        @if (item.icon) {
+          <img [src]="item.icon" width="25" alt="Náhled fotky" />
+        }
+        <span>{{ item.name }}</span>
+      </div>
 
-    <div>
-      <a routerLink="/restaurants/{{ item.id }}">
-        <span>Details →</span>
-      </a>
-    </div>
-  </nz-list-item>
+      <div>
+        <a nz-button nzType="link" routerLink="/restaurants/{{ item.id }}">
+          Details
+        </a>
+      </div>
+    </nz-list-item>
   }
 </nz-list>
