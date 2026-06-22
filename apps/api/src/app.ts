@@ -1,6 +1,5 @@
 import configureOpenApi from './lib/configure-openapi';
 import { createApp } from './lib/create-app';
-import index from './routes/index.route';
 import restaurants from './routes/restaurants/restaurants.index';
 import auth from './routes/auth/auth.index';
 import groups from './routes/groups/groups.index';
@@ -29,7 +28,6 @@ const protectedAppRoutes = createApp();
 protectedAppRoutes.use('*', authMiddleware);
 
 const protectedRoutes = protectedAppRoutes
-  .route('/', index)
   .route('/', restaurants)
   .route('/', groups)
   .route('/', user);
