@@ -12,6 +12,7 @@ import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { RouterModule } from '@angular/router';
 import { RestaurantForm } from '../components/restaurant-form/restaurant-form';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { ListRestaurantsResponse } from 'contracts/restaurants.contracts';
 
 @Component({
   selector: 'mol-restaurants',
@@ -21,9 +22,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Restaurants implements OnInit {
-  protected readonly restaurants = signal<Array<{ id: string; name: string }>>(
-    [],
-  );
+  protected readonly restaurants = signal<ListRestaurantsResponse>([]);
   private readonly isNewRestaurantCreating = signal(false);
 
   private readonly apiService = inject(ApiService);

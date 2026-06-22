@@ -1,7 +1,14 @@
 import { createRoute, z } from '@hono/zod-openapi';
 import { HttpStatusCodes } from '../../helpers/http-status-codes.helper';
 import { jsonContent } from '../../helpers/openapi.helper';
-import { GET_GROUP_BY_ID_RESPONSE_SCHEMA } from 'contracts/groups.contracts';
+import {
+  CREATE_GROUP_REQUEST_SCHEMA,
+  GET_GROUP_BY_ID_RESPONSE_SCHEMA,
+  JOIN_GROUP_REQUEST_SCHEMA,
+  JOIN_GROUP_RESPONSE_SCHEMA,
+  LIST_GROUPS_RESPONSE_SCHEMA,
+  MY_GROUPS_RESPONSE_SCHEMA,
+} from 'contracts/groups.contracts';
 
 const tags = ['Groups'];
 
@@ -14,14 +21,7 @@ export const createGroup = createRoute({
   tags,
   request: {
     body: {
-      content: {
-        'application/json': {
-          schema: z.object({
-            name: z.string(),
-          }),
-        },
-      },
-      description: 'Create a new group',
+      ...jsonContent(CREATE_GROUP_REQUEST_SCHEMA, 'Create group request body'),
       required: true,
     },
   },
@@ -39,7 +39,10 @@ export const listGroups = createRoute({
   tags,
   description: 'List all groups',
   responses: {
-    [HttpStatusCodes.OK]: jsonContent(z.array(z.object({})), 'List of groups'),
+    [HttpStatusCodes.OK]: jsonContent(
+      LIST_GROUPS_RESPONSE_SCHEMA,
+      'List of groups',
+    ),
   },
 });
 
@@ -71,13 +74,11 @@ export const joinGroup = createRoute({
   tags,
   description: 'Join a group',
   request: {
-    params: z.object({
-      groupId: z.uuid(),
-    }),
+    params: JOIN_GROUP_REQUEST_SCHEMA,
   },
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      z.object({}),
+      JOIN_GROUP_RESPONSE_SCHEMA,
       'Joined group successfully',
     ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
@@ -98,7 +99,7 @@ export const myGroups = createRoute({
   description: 'Get groups of the current user',
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      z.array(z.object({})),
+      MY_GROUPS_RESPONSE_SCHEMA,
       'List of user groups',
     ),
   },

@@ -47,7 +47,7 @@ export const loginHandler: AppRouteHandler<LoginRoute> = async (c) => {
 };
 
 export const registerHandler: AppRouteHandler<RegisterRoute> = async (c) => {
-  const { email, password } = c.req.valid('json');
+  const { email, name, password } = c.req.valid('json');
 
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
@@ -55,7 +55,7 @@ export const registerHandler: AppRouteHandler<RegisterRoute> = async (c) => {
   const [createdUser] = await db
     .insert(DbSchema.users)
     .values({
-      name: 'John Doe',
+      name,
       passwordHash,
       email,
     })

@@ -1,4 +1,3 @@
-import { RouteHandler } from '@hono/zod-openapi';
 import {
   CreateRestaurantRoute,
   DeleteRestaurantRoute,
@@ -17,10 +16,19 @@ export const listRestaurantsHandler: AppRouteHandler<
     .select({
       id: DbSchema.restaurants.id,
       name: DbSchema.restaurants.name,
+      icon: DbSchema.restaurants.icon,
     })
     .from(DbSchema.restaurants);
 
-  return c.json(restaurants);
+  const formattedRestaurants = restaurants.map((restaurant) => {
+    return {
+      id: restaurant.id,
+      name: restaurant.name,
+      icon: restaurant.icon ?? undefined,
+    };
+  });
+
+  return c.json(formattedRestaurants, HttpStatusCodes.OK);
 };
 
 export const restaurantDetailsHandler: AppRouteHandler<
@@ -31,6 +39,9 @@ export const restaurantDetailsHandler: AppRouteHandler<
     .select({
       id: DbSchema.restaurants.id,
       name: DbSchema.restaurants.name,
+      url: DbSchema.restaurants.url,
+      dailyMenuUrl: DbSchema.restaurants.dailyMenuUrl,
+      icon: DbSchema.restaurants.icon,
     })
     .from(DbSchema.restaurants)
     .where(eq(DbSchema.restaurants.id, id))
@@ -43,7 +54,16 @@ export const restaurantDetailsHandler: AppRouteHandler<
     );
   }
 
-  return c.json(restaurant, HttpStatusCodes.OK);
+  return c.json(
+    {
+      id: restaurant.id,
+      name: restaurant.name,
+      url: restaurant.url ?? undefined,
+      dailyMenuUrl: restaurant.dailyMenuUrl ?? undefined,
+      icon: restaurant.icon ?? undefined,
+    },
+    HttpStatusCodes.OK,
+  );
 };
 
 export const createRestaurantHandler: AppRouteHandler<
@@ -52,10 +72,24 @@ export const createRestaurantHandler: AppRouteHandler<
   const restaurant = c.req.valid('json');
   const [inserted] = await db
     .insert(DbSchema.restaurants)
-    .values({ name: restaurant.name })
+    .values({
+      name: restaurant.name,
+      url: restaurant.url,
+      dailyMenuUrl: restaurant.dailyMenuUrl,
+      icon: restaurant.icon,
+    })
     .returning();
 
-  return c.json(inserted, HttpStatusCodes.CREATED);
+  return c.json(
+    {
+      id: inserted.id,
+      name: inserted.name,
+      url: inserted.url ?? undefined,
+      dailyMenuUrl: inserted.dailyMenuUrl ?? undefined,
+      icon: inserted.icon ?? undefined,
+    },
+    HttpStatusCodes.CREATED,
+  );
 };
 
 export const deleteRestaurantHandler: AppRouteHandler<

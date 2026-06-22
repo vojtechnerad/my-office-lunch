@@ -1,25 +1,20 @@
 import { z } from '@hono/zod-openapi';
 
+export const LOGIN_REQUEST_SCHEMA = z.object({
+  email: z.email(),
+  password: z.string(),
+});
+
 export const LOGIN_RESPONSE_SCHEMA = z.object({
   token: z.string(),
   id: z.string(),
   name: z.string(),
 });
 
-export const ME_RESPONSE_SCHEMA = z.object({
-  id: z.string(),
-  role: z.string(),
-  email: z.string(),
-  name: z.string(),
-  createdAt: z.string(),
-  userGroups: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-      isAdmin: z.boolean(),
-    }),
-  ),
+export const REGISTER_REQUEST_SCHEMA = z.object({
+  name: z.string().min(1, 'Name is required'),
+  email: z.email(),
+  password: z.string(),
 });
 
 export type LoginResponse = z.infer<typeof LOGIN_RESPONSE_SCHEMA>;
-export type MeResponse = z.infer<typeof ME_RESPONSE_SCHEMA>;

@@ -1,8 +1,9 @@
 import { createRoute, z } from '@hono/zod-openapi';
 import { HttpStatusCodes } from '../../helpers/http-status-codes.helper';
 import {
+  LOGIN_REQUEST_SCHEMA,
   LOGIN_RESPONSE_SCHEMA,
-  ME_RESPONSE_SCHEMA,
+  REGISTER_REQUEST_SCHEMA,
 } from 'contracts/auth.contracts';
 import { ERROR_RESPONSE_SCHEMA } from 'contracts/errors.contracts';
 import { jsonContent } from '../../helpers/openapi.helper';
@@ -13,16 +14,13 @@ export const loginRoute = createRoute({
   method: 'post',
   path: '/login',
   tags,
+  description: 'Login with email and password to receive a JWT token',
   request: {
     body: {
-      content: {
-        'application/json': {
-          schema: z.object({
-            email: z.email(),
-            password: z.string(),
-          }),
-        },
-      },
+      ...jsonContent(
+        LOGIN_REQUEST_SCHEMA,
+        'Login request with email and password',
+      ),
     },
   },
   responses: {
@@ -41,17 +39,13 @@ export const registerRoute = createRoute({
   method: 'post',
   path: '/register',
   tags,
+  description: 'Register a new user with name, email, and password',
   request: {
     body: {
-      content: {
-        'application/json': {
-          schema: z.object({
-            name: z.string(),
-            email: z.email(),
-            password: z.string(),
-          }),
-        },
-      },
+      ...jsonContent(
+        REGISTER_REQUEST_SCHEMA,
+        'Register request with name, email, and password',
+      ),
     },
   },
   responses: {
