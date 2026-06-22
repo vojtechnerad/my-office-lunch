@@ -28,8 +28,8 @@ const protectedAppRoutes = createApp();
 protectedAppRoutes.use('*', authMiddleware);
 
 const protectedRoutes = protectedAppRoutes
-  .route('/', restaurants)
   .route('/', groups)
+  .route('/', restaurants)
   .route('/', user);
 
 const app = appWithRoutes.route('/', auth).route('/', protectedRoutes);
