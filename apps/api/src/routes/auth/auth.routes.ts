@@ -7,9 +7,12 @@ import {
 import { ERROR_RESPONSE_SCHEMA } from 'contracts/errors.contracts';
 import { jsonContent } from '../../helpers/openapi.helper';
 
+const tags = ['Auth'];
+
 export const loginRoute = createRoute({
   method: 'post',
   path: '/login',
+  tags,
   request: {
     body: {
       content: {
@@ -37,6 +40,7 @@ export const loginRoute = createRoute({
 export const registerRoute = createRoute({
   method: 'post',
   path: '/register',
+  tags,
   request: {
     body: {
       content: {
