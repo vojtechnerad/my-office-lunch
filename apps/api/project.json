@@ -79,6 +79,12 @@
           "buildTarget": "api:build:production"
         }
       }
+    },
+    "vitest": {
+      "executor": "@nx/vitest:test",
+      "options": {
+        "configFile": "apps/api/vitest.config.mts"
+      }
     }
   }
 }
