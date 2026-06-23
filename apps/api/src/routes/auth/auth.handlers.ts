@@ -17,6 +17,7 @@ export const loginHandler: AppRouteHandler<LoginRoute> = async (c) => {
     .limit(1);
 
   if (!user) {
+    c.var.logger.info(`Failed login attempt for non-existent user: ${email}`);
     return c.json(
       { message: 'Invalid email or password' },
       HttpStatusCodes.UNAUTHORIZED,
@@ -24,6 +25,9 @@ export const loginHandler: AppRouteHandler<LoginRoute> = async (c) => {
   }
 
   if (!(await bcrypt.compare(password, user.passwordHash))) {
+    c.var.logger.info(
+      `Failed login attempt for user: ${user.email} (${user.id})`,
+    );
     return c.json(
       { message: 'Invalid email or password' },
       HttpStatusCodes.UNAUTHORIZED,
@@ -35,6 +39,8 @@ export const loginHandler: AppRouteHandler<LoginRoute> = async (c) => {
     role: 'user',
     name: user.name,
   });
+
+  c.var.logger.info(`User logged in: ${user.email} (${user.id})`);
 
   return c.json(
     {
