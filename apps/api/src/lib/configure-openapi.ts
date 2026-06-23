@@ -14,6 +14,7 @@ export default function configureOpenApi(app: AppOpenAPI) {
       title: 'MyOfficeLunch API',
       description: 'API documentation for MyOfficeLunch application',
     },
+    servers: [{ url: 'http://localhost:3000', description: 'Local server' }],
   });
 
   app.get(
