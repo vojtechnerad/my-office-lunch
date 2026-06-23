@@ -128,3 +128,21 @@ export const deleteGroupRestaurantVote = async ({
       ),
     );
 };
+
+export const isUserMemberOfGroup = async (
+  userId: string,
+  groupId: string,
+): Promise<boolean> => {
+  const [membership] = await db
+    .select()
+    .from(DbSchema.usersToGroups)
+    .where(
+      and(
+        eq(DbSchema.usersToGroups.groupId, groupId),
+        eq(DbSchema.usersToGroups.userId, userId),
+      ),
+    )
+    .limit(1);
+
+  return Boolean(membership);
+};

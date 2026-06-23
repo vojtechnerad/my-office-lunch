@@ -3,6 +3,7 @@ import { AppSocket, AppSocketServer } from '../../types';
 import {
   deleteGroupRestaurantVote,
   getCurrentVotingResults,
+  isUserMemberOfGroup,
   saveGroupRestaurantVote,
 } from '../database-queries';
 
@@ -19,6 +20,18 @@ export const registerGroupVotingEvents = (
   });
 
   socket.on('vote:change', async ({ groupId, restaurantId, vote }) => {
+    // Verify users membership in the group before allowing them to vote
+    const isMember = await isUserMemberOfGroup(
+      socket.data.jwtPayload.sub,
+      groupId,
+    );
+    if (!isMember) {
+      logger().warn(
+        `User ${socket.data.jwtPayload.sub} attempted to vote in group ${groupId} but is not a member.`,
+      );
+      return;
+    }
+
     logger().info(
       `Vote changed for group ${groupId} by user ${socket.data.jwtPayload.sub}:`,
       restaurantId,
