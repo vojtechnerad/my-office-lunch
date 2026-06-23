@@ -6,7 +6,8 @@ export function getDatabaseConfig() {
     process.exit(1);
   }
 
-  const shouldLog = process.env.LOG_LEVEL !== 'silent';
+  const logLevelsToLog = ['debug', 'trace'];
+  const shouldLog = logLevelsToLog.includes(process.env.LOG_LEVEL ?? 'error');
 
   return {
     databaseUrl,
