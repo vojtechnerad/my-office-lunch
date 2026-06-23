@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "db:up": "docker compose up -d"
+    "db:up": "docker compose up -d postgres",
+    "db:up:tmp": "docker compose -f docker-compose.test.yaml up -d postgres-tmp"
   },
   "private": true,
   "dependencies": {

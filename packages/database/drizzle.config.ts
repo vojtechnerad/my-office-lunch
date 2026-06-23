@@ -1,10 +1,11 @@
 import { defineConfig } from 'drizzle-kit';
+import { getDatabaseUrl } from './src/lib/database-url';
 
 export default defineConfig({
   dialect: 'postgresql',
   schema: './src/lib/schema.ts',
   out: './src/lib/migrations',
   dbCredentials: {
-    url: 'postgresql://user:development-database-password@localhost:5432/mol', // TODO move to env variable
+    url: getDatabaseUrl(),
   },
 });

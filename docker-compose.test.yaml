@@ -1,0 +1,11 @@
+services:
+  postgres-tmp:
+    image: postgres:18-bookworm
+    restart: unless-stopped
+    container_name: mol-postgres-db-tmp
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=development-database-password
+      - POSTGRES_DB=mol_tmp
