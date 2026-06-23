@@ -3,4 +3,5 @@ const vitestDatabaseUrl =
   'postgresql://user:development-database-password@localhost:5433/mol_tmp';
 
 process.env.DATABASE_URL = vitestDatabaseUrl;
+process.env.LOG_LEVEL = 'silent';
 process.env.JWT_SECRET ??= 'vitest-secret';

@@ -1,4 +1,4 @@
-export function getDatabaseUrl() {
+export function getDatabaseConfig() {
   const databaseUrl = process.env.DATABASE_URL?.trim();
 
   if (!databaseUrl) {
@@ -6,5 +6,10 @@ export function getDatabaseUrl() {
     process.exit(1);
   }
 
-  return databaseUrl;
+  const shouldLog = process.env.LOG_LEVEL !== 'silent';
+
+  return {
+    databaseUrl,
+    shouldLog,
+  };
 }

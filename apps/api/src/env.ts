@@ -4,7 +4,7 @@ const EnvSchema = z.object({
   PORT: z.coerce.number().default(3000),
   JWT_SECRET: z.string(),
   DATABASE_URL: z.url(),
-  // LOG_LEVEL: z.enum(['error', 'warn', 'info', 'debug']),
+  LOG_LEVEL: z.enum(['silent', 'error', 'warn', 'info', 'debug']),
 });
 
 const parsedEnv = EnvSchema.safeParse(process.env);

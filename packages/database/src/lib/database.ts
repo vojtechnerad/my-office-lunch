@@ -1,7 +1,9 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
-import { getDatabaseUrl } from './database-url';
+import { getDatabaseConfig } from './database-url';
+
+const { databaseUrl, shouldLog } = getDatabaseConfig();
 
 export const db = drizzle({
-  connection: getDatabaseUrl(),
-  logger: true,
+  connection: databaseUrl,
+  logger: shouldLog,
 });
