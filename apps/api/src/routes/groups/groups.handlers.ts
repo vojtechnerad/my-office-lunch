@@ -163,8 +163,6 @@ export const addFavoriteRestaurantToGroupHandler: AppRouteHandler<
     return c.json({ message: 'Group not found' }, HttpStatusCodes.NOT_FOUND);
   }
 
-  console.log(group);
-
   // Check if restaurant exists
   const [restaurant] = await db
     .select()
@@ -178,8 +176,6 @@ export const addFavoriteRestaurantToGroupHandler: AppRouteHandler<
       HttpStatusCodes.NOT_FOUND,
     );
   }
-
-  console.log(restaurant);
 
   // Add favorite restaurant to group
   const [newFavorite] = await db
