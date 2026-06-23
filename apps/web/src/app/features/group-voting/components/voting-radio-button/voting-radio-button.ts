@@ -26,6 +26,7 @@ export class VotingRadioButton {
 
   protected deselectValue(): void {
     this.selectedValue.set(null);
+    this.valueChange.emit(null);
   }
 
   handleRadioChange(value: VotingOption): void {

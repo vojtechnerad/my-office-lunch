@@ -17,7 +17,11 @@ import {
 import { RestaurantRow } from '../components/restaurant-row/restaurant-row';
 import { SocketService } from '../services/socket-service';
 import { GroupDetails } from '../../../shared/types/group.types';
-import { RestaurantVotingResult } from 'contracts/sockets.contracts';
+import {
+  GroupJoinedPayload,
+  RestaurantVotingResult,
+  VoteUpdatedResultsPayload,
+} from 'contracts/websockets.contracts';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { DailyMenuModal } from '../components/daily-menu-modal/daily-menu-modal';
 
@@ -55,18 +59,19 @@ export class GroupVoting implements OnInit {
         this.socketService.connect(token);
         this.socketService.emit('group:join', { groupId });
 
-        this.socketService
-          .on<{ results: Array<RestaurantVotingResult> }>('group:joined')
-          .subscribe(({ results }) => {
-            this.results.set(results);
-          });
+        this.socketService.on('group:joined').subscribe(({ results }) => {
+          const typedResults = results as GroupJoinedPayload['results'];
+
+          this.results.set(typedResults);
+        });
 
         this.socketService
-          .on<{
-            results: Array<RestaurantVotingResult>;
-          }>('vote:updated-results')
+          .on('vote:updated-results')
           .subscribe(({ results }) => {
-            this.results.set(results);
+            const typedResults =
+              results as VoteUpdatedResultsPayload['results'];
+
+            this.results.set(typedResults);
           });
       }
 

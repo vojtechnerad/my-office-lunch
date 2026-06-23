@@ -1,7 +1,7 @@
 import { serve } from '@hono/node-server';
 import app from './app';
 import { env } from './env';
-import { createSocketServer } from './lib/create-socket-server';
+import { createSocketServer } from './websockets';
 import { Server } from 'node:http';
 import { logger } from './middlewares/logger.middleware';
 
