@@ -68,11 +68,13 @@ export const registerHandler: AppRouteHandler<RegisterRoute> = async (c) => {
     .returning();
 
   if (!createdUser) {
+    c.var.logger.error(`Failed to create user: ${email}`);
     return c.json(
       { message: 'User creation failed' },
       HttpStatusCodes.INTERNAL_SERVER_ERROR,
     );
   }
 
+  c.var.logger.info(`User created: ${createdUser.email} (${createdUser.id})`);
   return c.json({ message: 'User created' }, HttpStatusCodes.CREATED);
 };

@@ -28,6 +28,7 @@ export const listRestaurantsHandler: AppRouteHandler<
     };
   });
 
+  c.var.logger.info(`Retrieved ${formattedRestaurants.length} restaurants`);
   return c.json(formattedRestaurants, HttpStatusCodes.OK);
 };
 
@@ -48,12 +49,16 @@ export const restaurantDetailsHandler: AppRouteHandler<
     .limit(1);
 
   if (!restaurant) {
+    c.var.logger.info(`Restaurant not found: ${id}`);
     return c.json(
       { message: `Restaurant with ID ${id} not found` },
       HttpStatusCodes.NOT_FOUND,
     );
   }
 
+  c.var.logger.info(
+    `Retrieved restaurant: ${restaurant.name} (${restaurant.id})`,
+  );
   return c.json(
     {
       id: restaurant.id,
@@ -80,6 +85,7 @@ export const createRestaurantHandler: AppRouteHandler<
     })
     .returning();
 
+  c.var.logger.info(`Created restaurant: ${inserted.name} (${inserted.id})`);
   return c.json(
     {
       id: inserted.id,
@@ -103,6 +109,7 @@ export const deleteRestaurantHandler: AppRouteHandler<
     .limit(1);
 
   if (!restaurant) {
+    c.var.logger.info(`Restaurant not found: ${id}`);
     return c.json({ message: `Restaurant with ID ${id} not found` });
   }
 
@@ -111,6 +118,9 @@ export const deleteRestaurantHandler: AppRouteHandler<
     .where(eq(DbSchema.restaurants.id, id))
     .returning();
 
+  c.var.logger.info(
+    `Deleted restaurant: ${deletedRestaurant.name} (${deletedRestaurant.id})`,
+  );
   return c.json({
     message: `Restaurant ${deletedRestaurant.name} with ID ${id} deleted successfully`,
   });

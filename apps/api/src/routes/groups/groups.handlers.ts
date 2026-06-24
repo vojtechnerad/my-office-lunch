@@ -22,6 +22,9 @@ export const createGroupHandler: AppRouteHandler<CreateGroupRoute> = async (
     .values({ name: group.name, adminUserId: userId })
     .returning();
 
+  c.var.logger.info(
+    `Group created: ${inserted.name} (${inserted.id}) by user ${userId}`,
+  );
   return c.json(inserted, HttpStatusCodes.CREATED);
 };
 
@@ -29,6 +32,7 @@ export const listGroupsHandler: AppRouteHandler<ListGroupsRoute> = async (
   c,
 ) => {
   const groups = await db.select().from(DbSchema.groups);
+  c.var.logger.info(`Retrieved ${groups.length} groups`);
   return c.json(groups);
 };
 
@@ -43,6 +47,7 @@ export const getGroupByIdHandler: AppRouteHandler<GetGroupByIdRoute> = async (
     .limit(1);
 
   if (!group) {
+    c.var.logger.info(`Group not found: ${groupId}`);
     return c.json({ message: 'Group not found' }, HttpStatusCodes.NOT_FOUND);
   }
 
@@ -78,6 +83,9 @@ export const getGroupByIdHandler: AppRouteHandler<GetGroupByIdRoute> = async (
     )
     .where(eq(DbSchema.usersToGroups.groupId, groupId));
 
+  c.var.logger.info(
+    `Retrieved group: ${group.name} (${group.id}) with ${favoriteRestaurants.length} favorite restaurants and ${members.length} members`,
+  );
   return c.json(
     {
       ...group,
@@ -103,10 +111,14 @@ export const updateGroupHandler: AppRouteHandler<UpdateGroupRoute> = async (
     .limit(1);
 
   if (!group) {
+    c.var.logger.info(`Group not found: ${groupId}`);
     return c.json({ message: 'Group not found' }, HttpStatusCodes.NOT_FOUND);
   }
 
   if (group.adminUserId !== userId) {
+    c.var.logger.info(
+      `Unauthorized update attempt by user ${userId} on group ${groupId}`,
+    );
     return c.json({ message: 'Unauthorized' }, HttpStatusCodes.FORBIDDEN);
   }
 
@@ -120,6 +132,9 @@ export const updateGroupHandler: AppRouteHandler<UpdateGroupRoute> = async (
     .where(eq(DbSchema.groups.id, groupId))
     .returning();
 
+  c.var.logger.info(
+    `Group updated: ${updatedGroup.name} (${updatedGroup.id}) by user ${userId}`,
+  );
   return c.json(updatedGroup, HttpStatusCodes.OK);
 };
 
@@ -135,6 +150,7 @@ export const joinGroupHandler: AppRouteHandler<JoinGroupRoute> = async (c) => {
     .limit(1);
 
   if (!group) {
+    c.var.logger.info(`Group not found: ${groupId}`);
     return c.json({ message: 'Group not found' }, HttpStatusCodes.NOT_FOUND);
   }
 
@@ -151,6 +167,7 @@ export const joinGroupHandler: AppRouteHandler<JoinGroupRoute> = async (c) => {
     .limit(1);
 
   if (membership) {
+    c.var.logger.info(`User ${userId} is already a member of group ${groupId}`);
     return c.json(
       { message: 'User is already a member' },
       HttpStatusCodes.BAD_REQUEST,
@@ -163,6 +180,7 @@ export const joinGroupHandler: AppRouteHandler<JoinGroupRoute> = async (c) => {
     .values({ groupId, userId })
     .returning();
 
+  c.var.logger.info(`User ${userId} joined group ${groupId}`);
   return c.json(newMembership, HttpStatusCodes.OK);
 };
 
@@ -180,6 +198,7 @@ export const myGroupsHandler: AppRouteHandler<MyGroupsRoute> = async (c) => {
 
   const groups = membershipsWithGroups.map((row) => row.groups);
 
+  c.var.logger.info(`Retrieved ${groups.length} groups for user ${userId}`);
   return c.json(groups, HttpStatusCodes.OK);
 };
 
@@ -196,6 +215,7 @@ export const addFavoriteRestaurantToGroupHandler: AppRouteHandler<
     .limit(1);
 
   if (!group) {
+    c.var.logger.info(`Group not found: ${groupId}`);
     return c.json({ message: 'Group not found' }, HttpStatusCodes.NOT_FOUND);
   }
 
@@ -207,6 +227,7 @@ export const addFavoriteRestaurantToGroupHandler: AppRouteHandler<
     .limit(1);
 
   if (!restaurant) {
+    c.var.logger.info(`Restaurant not found: ${restaurantId}`);
     return c.json(
       { message: 'Restaurant not found' },
       HttpStatusCodes.NOT_FOUND,
@@ -219,5 +240,8 @@ export const addFavoriteRestaurantToGroupHandler: AppRouteHandler<
     .values({ groupId, restaurantId })
     .returning();
 
+  c.var.logger.info(
+    `Added favorite restaurant ${restaurantId} to group ${groupId}`,
+  );
   return c.json(newFavorite, HttpStatusCodes.OK);
 };

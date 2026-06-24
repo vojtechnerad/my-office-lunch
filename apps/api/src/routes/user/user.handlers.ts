@@ -22,6 +22,7 @@ export const userDetailsHandler: AppRouteHandler<UserDetailsRoute> = async (
     .limit(1);
 
   if (!userRecord) {
+    c.var.logger.info(`User not found: ${userId}`);
     return c.json({ message: 'User not found' }, HttpStatusCodes.NOT_FOUND);
   }
 
@@ -44,6 +45,7 @@ export const userDetailsHandler: AppRouteHandler<UserDetailsRoute> = async (
     isAdmin: group.adminUserId === userId,
   }));
 
+  c.var.logger.info(`Retrieved details for user ${userId}`);
   return c.json(
     {
       id: userRecord.id,
