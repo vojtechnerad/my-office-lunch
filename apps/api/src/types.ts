@@ -2,11 +2,16 @@ import { OpenAPIHono, RouteConfig, RouteHandler } from '@hono/zod-openapi';
 import { JwtPayload } from './helpers/jwt.helper';
 import { Server as HttpServer } from 'node:http';
 import { Server as SocketIOServer, Socket } from 'socket.io';
+import { type HonoLogLayerVariables } from '@loglayer/hono';
+import {
+  WebSocketClientToServerEvents,
+  WebSocketServerToClientEvents,
+} from 'contracts/websockets.contracts';
 
 export type AppBindings = {
   Variables: {
     jwtPayload: JwtPayload;
-  };
+  } & HonoLogLayerVariables;
 };
 
 export type AppOpenAPI = OpenAPIHono<AppBindings>;
@@ -21,15 +26,15 @@ export type AuthenticatedSocketData = {
 };
 
 export type AppSocket = Socket<
-  Record<string, never>,
-  Record<string, never>,
+  WebSocketClientToServerEvents,
+  WebSocketServerToClientEvents,
   Record<string, never>,
   AuthenticatedSocketData
 >;
 
 export type AppSocketServer = SocketIOServer<
-  Record<string, never>,
-  Record<string, never>,
+  WebSocketClientToServerEvents,
+  WebSocketServerToClientEvents,
   Record<string, never>,
   AuthenticatedSocketData
 >;

@@ -6,8 +6,12 @@ import groups from './routes/groups/groups.index';
 import user from './routes/user/user.index';
 import { authMiddleware } from './middlewares/auth.middleware';
 import { cors } from 'hono/cors';
+import { logger } from './middlewares/logger.middleware';
+import { honoLogLayer } from '@loglayer/hono';
 
 const baseApp = createApp();
+
+baseApp.use(honoLogLayer({ instance: logger() }));
 
 baseApp.use(
   '*',

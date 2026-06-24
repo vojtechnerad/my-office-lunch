@@ -8,7 +8,11 @@ import {
   JOIN_GROUP_RESPONSE_SCHEMA,
   LIST_GROUPS_RESPONSE_SCHEMA,
   MY_GROUPS_RESPONSE_SCHEMA,
+  UPDATE_GROUP_PARAMS_SCHEMA,
+  UPDATE_GROUP_REQUEST_SCHEMA,
+  UPDATE_GROUP_RESPONSE_SCHEMA,
 } from 'contracts/groups.contracts';
+import { ERROR_RESPONSE_SCHEMA } from 'contracts/errors.contracts';
 
 const tags = ['Groups'];
 
@@ -63,6 +67,35 @@ export const getGroupById = createRoute({
     ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       z.object({ message: z.string() }),
+      'Group not found',
+    ),
+  },
+});
+
+export const updateGroup = createRoute({
+  path: '/groups/{groupId}',
+  method: 'patch',
+  tags,
+  description: 'Update group details',
+  security: [{ bearerAuth: [] }],
+  request: {
+    params: UPDATE_GROUP_PARAMS_SCHEMA,
+    body: {
+      ...jsonContent(UPDATE_GROUP_REQUEST_SCHEMA, 'Update group request body'),
+      required: true,
+    },
+  },
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(
+      UPDATE_GROUP_RESPONSE_SCHEMA,
+      'Group updated successfully',
+    ),
+    [HttpStatusCodes.FORBIDDEN]: jsonContent(
+      ERROR_RESPONSE_SCHEMA,
+      'User unauthorized to update group',
+    ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      ERROR_RESPONSE_SCHEMA,
       'Group not found',
     ),
   },
@@ -131,6 +164,7 @@ export const addFavoriteRestaurantToGroup = createRoute({
 export type CreateGroupRoute = typeof createGroup;
 export type ListGroupsRoute = typeof listGroups;
 export type GetGroupByIdRoute = typeof getGroupById;
+export type UpdateGroupRoute = typeof updateGroup;
 export type JoinGroupRoute = typeof joinGroup;
 export type MyGroupsRoute = typeof myGroups;
 export type AddFavoriteRestaurantToGroupRoute =

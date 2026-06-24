@@ -7,6 +7,7 @@ import {
   JoinGroupRoute,
   ListGroupsRoute,
   MyGroupsRoute,
+  UpdateGroupRoute,
 } from './groups.routes';
 import { and, eq } from 'drizzle-orm';
 import { HttpStatusCodes } from '../../helpers/http-status-codes.helper';
@@ -21,7 +22,7 @@ export const createGroupHandler: AppRouteHandler<CreateGroupRoute> = async (
     .values({ name: group.name, adminUserId: userId })
     .returning();
 
-  return c.json(inserted);
+  return c.json(inserted, HttpStatusCodes.CREATED);
 };
 
 export const listGroupsHandler: AppRouteHandler<ListGroupsRoute> = async (
@@ -85,6 +86,41 @@ export const getGroupByIdHandler: AppRouteHandler<GetGroupByIdRoute> = async (
     },
     HttpStatusCodes.OK,
   );
+};
+
+export const updateGroupHandler: AppRouteHandler<UpdateGroupRoute> = async (
+  c,
+) => {
+  const { groupId } = c.req.valid('param');
+  const { name } = c.req.valid('json');
+
+  const userId = c.var.jwtPayload.sub;
+
+  const [group] = await db
+    .select()
+    .from(DbSchema.groups)
+    .where(eq(DbSchema.groups.id, groupId))
+    .limit(1);
+
+  if (!group) {
+    return c.json({ message: 'Group not found' }, HttpStatusCodes.NOT_FOUND);
+  }
+
+  if (group.adminUserId !== userId) {
+    return c.json({ message: 'Unauthorized' }, HttpStatusCodes.FORBIDDEN);
+  }
+
+  const updateData = {
+    ...(name !== undefined ? { name } : {}),
+  };
+
+  const [updatedGroup] = await db
+    .update(DbSchema.groups)
+    .set(updateData)
+    .where(eq(DbSchema.groups.id, groupId))
+    .returning();
+
+  return c.json(updatedGroup, HttpStatusCodes.OK);
 };
 
 export const joinGroupHandler: AppRouteHandler<JoinGroupRoute> = async (c) => {
@@ -163,8 +199,6 @@ export const addFavoriteRestaurantToGroupHandler: AppRouteHandler<
     return c.json({ message: 'Group not found' }, HttpStatusCodes.NOT_FOUND);
   }
 
-  console.log(group);
-
   // Check if restaurant exists
   const [restaurant] = await db
     .select()
@@ -178,8 +212,6 @@ export const addFavoriteRestaurantToGroupHandler: AppRouteHandler<
       HttpStatusCodes.NOT_FOUND,
     );
   }
-
-  console.log(restaurant);
 
   // Add favorite restaurant to group
   const [newFavorite] = await db

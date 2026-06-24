@@ -6,6 +6,7 @@ const router = createRouter()
   .openapi(routes.listGroups, handlers.listGroupsHandler)
   .openapi(routes.myGroups, handlers.myGroupsHandler)
   .openapi(routes.getGroupById, handlers.getGroupByIdHandler)
+  .openapi(routes.updateGroup, handlers.updateGroupHandler)
   .openapi(routes.createGroup, handlers.createGroupHandler)
   .openapi(routes.joinGroup, handlers.joinGroupHandler)
   .openapi(
