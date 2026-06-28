@@ -3,15 +3,14 @@ import { describe, expect, it, expectTypeOf } from 'vitest';
 import { testClient } from 'hono/testing';
 import router from './groups.index';
 import { createApp } from '../../lib/create-app';
+import app from '../../app';
 
-const client = testClient(createApp().route('/', router));
+const client = testClient(app);
 
 describe('Groups list', () => {
-  it('Returns a list of groups', async () => {
+  it('Unauthorized user unable to access groups list', async () => {
     const response = await client.groups.$get();
-    const result = await response.json();
 
-    expect(response.status).toBe(200);
-    expectTypeOf(result).toBeArray();
+    expect(response.status).toBe(401);
   });
 });

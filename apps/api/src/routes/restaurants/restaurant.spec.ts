@@ -2,14 +2,14 @@ import { describe, it, expectTypeOf } from 'vitest';
 import router from './restaurants.index';
 import { createApp } from '../../lib/create-app';
 import { testClient } from 'hono/testing';
+import app from '../../app';
+
+const client = testClient(app);
 
 describe('Restaurants list', () => {
-  it('Returns a list of restaurants', async () => {
-    const client = testClient(createApp().route('/', router));
+  it('Unauthorized user unable to access restaurants list', async () => {
     const response = await client.restaurants.$get();
-    const result = await response.json();
 
-    expect(response.status).toBe(200);
-    expectTypeOf(result).toBeArray();
+    expect(response.status).toBe(401);
   });
 });
