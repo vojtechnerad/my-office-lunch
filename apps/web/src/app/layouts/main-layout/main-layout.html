@@ -1,61 +1,136 @@
-<nz-layout style="height: 100%">
-  <nz-page-header>
-    <nz-page-header-title>
-      <div class="flex items-center gap-3">
-        <img src="mol-logo.svg" alt="My Office Lunch Logo" width="22" />
-        <span class="mb-0.5">My Office Lunch</span>
-      </div>
-    </nz-page-header-title>
-
-    <nz-page-header-extra>
-      <nz-space>
-        <button nz-button nzType="dashed" routerLink="/profile">
-          <nz-icon nzType="user" nzTheme="outline" />
-          {{ name }}
-        </button>
-
+<div hlmSidebarWrapper>
+  <hlm-sidebar collapsible="none">
+    <div hlmSidebarContent>
+      <div hlmSidebarHeader>
         <button
-          nz-button
-          nz-dropdown
-          nzTrigger="click"
-          nzType="dashed"
-          [nzDropdownMenu]="menu"
+          hlmBtn
+          variant="ghost"
+          class="w-full justify-start gap-3 h-14"
+          [hlmDropdownMenuTrigger]="appInfo"
+          side="right"
+          align="start"
         >
-          <nz-icon nzType="down" />
+          <img src="mol-logo.svg" alt="My Office Lunch Logo" width="22" />
+
+          <div class="flex flex-col items-start">
+            <span class="font-medium">My Office Lunch</span>
+          </div>
+
+          <ng-icon name="lucideChevronsUpDown" class="ml-auto" />
         </button>
-        <nz-dropdown-menu #menu="nzDropdownMenu">
-          <ul nz-menu>
-            <li nz-menu-item (click)="signOut()">
-              <nz-icon nzType="logout" nzTheme="outline" />
-              Log out
+      </div>
+
+      <div hlmSidebarGroup>
+        <div hlmSidebarGroupLabel>Your Groups</div>
+        <div hlmSidebarGroupContent>
+          <ul hlmSidebarMenu>
+            @if (isGroupsLoading()) {
+              <li hlmSidebarMenuItem>
+                <div class="flex items-center gap-2 px-2 py-2">
+                  <hlm-skeleton class="h-4 w-4 rounded-sm" />
+                  <hlm-skeleton class="h-4 w-40" />
+                </div>
+              </li>
+            }
+            @for (item of myGroups(); track item.id) {
+              <li hlmSidebarMenuItem routerLink="/group-voting/{{ item.id }}">
+                <button hlmSidebarMenuButton>
+                  <ng-icon name="lucideUsers" />
+                  <span>{{ item.name }}</span>
+                </button>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div hlmSidebarGroup>
+        <div hlmSidebarGroupLabel>Management</div>
+        <div hlmSidebarGroupContent>
+          <ul hlmSidebarMenu>
+            <li hlmSidebarMenuItem>
+              <button hlmSidebarMenuButton routerLink="/restaurants">
+                <ng-icon name="lucideCookingPot" />
+                <span>Restaurants</span>
+              </button>
             </li>
           </ul>
-        </nz-dropdown-menu>
-      </nz-space>
-    </nz-page-header-extra>
-  </nz-page-header>
 
-  <nz-layout>
-    <nz-sider>
-      <ul nz-menu nzMode="inline" style="height: 100%">
-        @for (group of myGroups(); track group.id) {
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/group-voting/{{ group.id }}">{{ group.name }}</a>
-          </li>
-        }
+          <ul hlmSidebarMenu>
+            <li hlmSidebarMenuItem>
+              <button hlmSidebarMenuButton routerLink="/groups">
+                <ng-icon name="lucideUsers" />
+                <span>Groups</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-        <li nz-menu-item nzMatchRouter>
-          <a routerLink="/groups">Groups</a>
-        </li>
+    <div hlmSidebarFooter>
+      <button
+        hlmBtn
+        variant="ghost"
+        class="w-full justify-start gap-3 h-14"
+        [hlmDropdownMenuTrigger]="menu"
+        side="right"
+        align="start"
+      >
+        <hlm-avatar>
+          <div hlmAvatarImage>
+            <ng-icon name="lucideChevronsUpDown"></ng-icon>
+          </div>
+          <!-- <img
+            hlmAvatarImage
+            src="/assets/avatar.png"
+            alt="spartan logo. Resembling a spartanic shield"
+          /> -->
+          <!-- <span hlmAvatarFallback>{{ name }}</span> -->
+        </hlm-avatar>
 
-        <li nz-menu-item nzMatchRouter>
-          <a routerLink="/restaurants">Restaurants</a>
-        </li>
-      </ul>
-    </nz-sider>
+        <div class="flex flex-col items-start">
+          <span>{{ name }}</span>
+        </div>
 
-    <nz-content>
-      <router-outlet />
-    </nz-content>
-  </nz-layout>
-</nz-layout>
+        <ng-icon name="lucideChevronsUpDown" class="ml-auto" />
+      </button>
+    </div>
+  </hlm-sidebar>
+  <router-outlet />
+</div>
+
+<ng-template #menu>
+  <hlm-dropdown-menu>
+    <!-- <hlm-dropdown-menu-group>
+      <hlm-dropdown-menu-label>My Account</hlm-dropdown-menu-label>
+      <button hlmDropdownMenuItem>Profile</button>
+    </hlm-dropdown-menu-group> -->
+    <!-- <hlm-dropdown-menu-separator /> -->
+    <hlm-dropdown-menu-group>
+      <button hlmDropdownMenuItem routerLink="/profile">
+        <ng-icon name="lucideUser" />
+        Profile
+      </button>
+      <button hlmDropdownMenuItem (click)="signOut()">
+        <ng-icon name="lucideLogOut" />
+        Log out
+      </button>
+    </hlm-dropdown-menu-group>
+  </hlm-dropdown-menu>
+</ng-template>
+
+<ng-template #appInfo>
+  <hlm-dropdown-menu>
+    <!-- <hlm-dropdown-menu-group>
+      <hlm-dropdown-menu-label>My Account</hlm-dropdown-menu-label>
+      <button hlmDropdownMenuItem>Profile</button>
+    </hlm-dropdown-menu-group> -->
+    <!-- <hlm-dropdown-menu-separator /> -->
+    <hlm-dropdown-menu-group>
+      <div>My Office Lunch app</div>
+      <div>Version: 0.0.1</div>
+      <!-- <button hlmDropdownMenuItem (click)="signOut()">Log out</button> -->
+    </hlm-dropdown-menu-group>
+  </hlm-dropdown-menu>
+</ng-template>
