@@ -1,4 +1,4 @@
-<div hlmSidebarWrapper>
+<div hlmSidebarWrapper class="flex h-screen w-screen">
   <hlm-sidebar collapsible="none">
     <div hlmSidebarContent>
       <div hlmSidebarHeader>
@@ -97,7 +97,10 @@
       </button>
     </div>
   </hlm-sidebar>
-  <router-outlet />
+
+  <div class="flex-1 h-full overflow-auto">
+    <router-outlet />
+  </div>
 </div>
 
 <ng-template #menu>

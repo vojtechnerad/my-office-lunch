@@ -7,7 +7,11 @@ import {
   signal,
   ViewContainerRef,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+  ActivatedRoute,
+  RouterLinkWithHref,
+  RouterModule,
+} from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { CommonModule } from '@angular/common';
 import {
@@ -24,10 +28,22 @@ import {
 } from 'contracts/websockets.contracts';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { DailyMenuModal } from '../components/daily-menu-modal/daily-menu-modal';
+import { HlmButtonImports } from '@spartan-ng/helm/button';
+import { HlmBreadcrumbImports } from '@spartan-ng/helm/breadcrumb';
+import { HlmDialogImports, HlmDialogService } from '@spartan-ng/helm/dialog';
 
 @Component({
   selector: 'mol-group-voting',
-  imports: [CommonModule, NzModalModule, VotingRadioButton, RestaurantRow],
+  imports: [
+    CommonModule,
+    NzModalModule,
+    VotingRadioButton,
+    RestaurantRow,
+    HlmButtonImports,
+    HlmBreadcrumbImports,
+    HlmDialogImports,
+    RouterModule,
+  ],
   templateUrl: './group-voting.html',
   styleUrl: './group-voting.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,6 +60,7 @@ export class GroupVoting implements OnInit {
   private readonly socketService = inject(SocketService);
   private readonly modal = inject(NzModalService);
   private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly dialogService = inject(HlmDialogService);
 
   constructor() {
     effect((onCleanup) => {
@@ -62,7 +79,7 @@ export class GroupVoting implements OnInit {
         this.socketService.on('group:joined').subscribe(({ results }) => {
           const typedResults = results as GroupJoinedPayload['results'];
 
-          this.results.set(typedResults);
+          this.results.set(typedResults.length > 0 ? typedResults : null);
         });
 
         this.socketService
@@ -71,7 +88,7 @@ export class GroupVoting implements OnInit {
             const typedResults =
               results as VoteUpdatedResultsPayload['results'];
 
-            this.results.set(typedResults);
+            this.results.set(typedResults.length > 0 ? typedResults : null);
           });
       }
 
@@ -105,21 +122,28 @@ export class GroupVoting implements OnInit {
     restaurantName: string,
     dailyMenuUrl: string,
   ): void {
-    const modal = this.modal.create({
-      nzTitle: `Daily Menu for ${restaurantName}`,
-      nzClosable: true,
-      nzContent: DailyMenuModal,
-      nzViewContainerRef: this.viewContainerRef,
-      nzWidth: '90dvw',
-      nzCentered: true,
-      nzBodyStyle: {
-        height: '90dvh',
-        padding: '0',
+    const dialogRef = this.dialogService.open(DailyMenuModal, {
+      showCloseButton: true,
+      context: {
+        dailyMenuUrl: dailyMenuUrl,
       },
-      nzFooter: null,
-      nzData: {
-        dailyMenuUrl,
-      },
+      contentClass: 'h-[90dvh] w-[90dvw]',
     });
+    // const modal = this.modal.create({
+    //   nzTitle: `Daily Menu for ${restaurantName}`,
+    //   nzClosable: true,
+    //   nzContent: DailyMenuModal,
+    //   nzViewContainerRef: this.viewContainerRef,
+    //   nzWidth: '90dvw',
+    //   nzCentered: true,
+    //   nzBodyStyle: {
+    //     height: '90dvh',
+    //     padding: '0',
+    //   },
+    //   nzFooter: null,
+    //   nzData: {
+    //     dailyMenuUrl,
+    //   },
+    // });
   }
 }

@@ -1,10 +1,55 @@
-<div class="text-xl">{{ restaurant().name }}</div>
-@if (restaurant().url) {
-<a nz-button nzType="dashed" [href]="restaurant().url" target="_blank">
-  Website
-</a>
-} @if (restaurant().dailyMenuUrl) {
-<a nz-button nzType="dashed" [href]="restaurant().dailyMenuUrl" target="_blank">
-  Daily Menu
-</a>
-}
+<div class="grid grid-cols-[auto_1fr] gap-4 items-center">
+  @if (restaurant().icon) {
+    <img
+      [src]="restaurant().icon"
+      alt="{{ restaurant().name }} icon"
+      class="w-6 h-6 rounded-full object-cover"
+    />
+  } @else {
+    <div
+      class="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center"
+    >
+      <span class="text-xs text-gray-600">N/A</span>
+    </div>
+  }
+
+  <div>
+    <span class="text-xl">{{ restaurant().name }}</span>
+    <button
+      hlmBtn
+      variant="outline"
+      [hlmDropdownMenuTrigger]="menu"
+      align="start"
+      size="xs"
+    >
+      <ng-icon name="lucideEllipsisVertical" />
+    </button>
+  </div>
+</div>
+
+<ng-template #menu>
+  <hlm-dropdown-menu class="w-40">
+    @if (restaurant().url) {
+      <a
+        hlmDropdownMenuItem
+        size="xs"
+        [href]="restaurant().url"
+        target="_blank"
+      >
+        Website
+        <ng-icon name="lucideExternalLink" />
+      </a>
+    }
+    @if (restaurant().dailyMenuUrl) {
+      <a
+        hlmDropdownMenuItem
+        size="xs"
+        [href]="restaurant().dailyMenuUrl"
+        target="_blank"
+      >
+        Daily Menu
+        <ng-icon name="lucideExternalLink" />
+      </a>
+    }
+  </hlm-dropdown-menu>
+</ng-template>

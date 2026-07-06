@@ -24,6 +24,7 @@ export const GET_GROUP_BY_ID_RESPONSE_SCHEMA = z.object({
       name: z.string(),
       url: z.string().nullable(),
       dailyMenuUrl: z.string().nullable(),
+      icon: z.string().nullable(),
     }),
   ),
   members: z.array(

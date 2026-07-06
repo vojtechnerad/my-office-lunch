@@ -1,24 +1,44 @@
+<nav hlmBreadcrumb>
+  <ol hlmBreadcrumbList>
+    <li hlmBreadcrumbItem>
+      <a hlmBreadcrumbLink>Your Groups</a>
+    </li>
+    <li hlmBreadcrumbSeparator></li>
+    <li hlmBreadcrumbItem>
+      <a hlmBreadcrumbPage routerLink="/group-voting/{{ group()?.id }}">
+        {{ group()?.name }}
+      </a>
+    </li>
+  </ol>
+</nav>
+
 @if (group()) {
   <h1 class="text-4xl">{{ group()?.name }}</h1>
   @for (restaurant of group()?.favoriteRestaurants; track restaurant.id) {
     <mol-restaurant-row [restaurant]="restaurant" />
-    @if (restaurant.dailyMenuUrl) {
-      <button
-        (click)="
-          handleOpenDailyMenuModal(restaurant.name, restaurant.dailyMenuUrl)
-        "
-      >
-        Daily Menu
-      </button>
-    }
+    <div class="flex gap-2">
+      @if (restaurant.dailyMenuUrl) {
+        <button
+          hlmBtn
+          variant="outline"
+          (click)="
+            handleOpenDailyMenuModal(restaurant.name, restaurant.dailyMenuUrl)
+          "
+        >
+          Daily Menu
+        </button>
+      }
 
-    <mol-voting-radio-button
-      (valueChange)="handleVoteChange($event, restaurant.id)"
-    />
+      <mol-voting-radio-button
+        (valueChange)="handleVoteChange($event, restaurant.id)"
+      />
+    </div>
   } @empty {
     <p>No favorite restaurants available.</p>
   }
 }
+
+<button hlmBtn>Button</button>
 
 <h2 class="text-2xl mt-8">Voting Results</h2>
 @if (results()) {
