@@ -1,22 +1,19 @@
-<button nz-button nzType="primary" (click)="handleClickNewRestaurant()">
-  Add new
-</button>
-
-<nz-list nzBordered>
+<hlm-item-group>
   @for (item of restaurants(); track item.id) {
-    <nz-list-item>
-      <div class="flex items-center gap-2">
-        @if (item.icon) {
-          <img [src]="item.icon" width="25" alt="Náhled fotky" />
-        }
-        <span>{{ item.name }}</span>
-      </div>
+    <a hlmItem variant="default" routerLink="/restaurants/{{ item.id }}">
+      <hlm-item-media>
+        <img hlmAvatarImage [src]="item.icon" [alt]="item.name" width="20" />
+      </hlm-item-media>
 
-      <div>
-        <a nz-button nzType="link" routerLink="/restaurants/{{ item.id }}">
-          Details
-        </a>
-      </div>
-    </nz-list-item>
+      <hlm-item-content class="gap-1">
+        <hlm-item-title>{{ item.name }}</hlm-item-title>
+      </hlm-item-content>
+
+      <hlm-item-actions>
+        <button hlmBtn variant="ghost" size="icon" class="rounded-full">
+          <ng-icon name="lucideChevronRight" />
+        </button>
+      </hlm-item-actions>
+    </a>
   }
-</nz-list>
+</hlm-item-group>
