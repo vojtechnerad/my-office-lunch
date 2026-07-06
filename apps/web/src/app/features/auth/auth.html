@@ -4,13 +4,36 @@
     <h1 class="text-5xl inline-block mb-1">My Office Lunch</h1>
   </div>
 
-  <div class="w-[450px]">
-    <input nz-input placeholder="Email" [(ngModel)]="email" />
+  <div class="w-[450px] flex flex-col">
+    <input hlmInput placeholder="Email" [(ngModel)]="email" />
 
-    <nz-input-password>
-      <input nz-input placeholder="Password" [(ngModel)]="password" />
-    </nz-input-password>
+    <div class="relative w-full">
+      <!-- Vstupní pole, které mění typ na základě Angular signálu -->
+      <input
+        hlmInput
+        [type]="isPasswordVisible() ? 'text' : 'password'"
+        id="password-input"
+        class="pr-10 w-full"
+        placeholder="Zadejte heslo"
+        [(ngModel)]="password"
+      />
 
-    <button nz-button nzType="primary" (click)="signIn()">Sign In</button>
+      <button
+        hlmBtn
+        variant="secondary"
+        size="icon"
+        class="absolute right-0 top-0 h-full px-3 text-muted-foreground hover:bg-transparent"
+        type="button"
+        (click)="togglePasswordVisibility()"
+      >
+        @if (isPasswordVisible()) {
+          <ng-icon name="lucideEye" />
+        } @else {
+          <ng-icon name="lucideEyeOff" />
+        }
+      </button>
+    </div>
+
+    <button hlmBtn (click)="signIn()">Sign In</button>
   </div>
 </div>
