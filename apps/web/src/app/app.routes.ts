@@ -21,6 +21,7 @@ export const appRoutes: Route[] = [
       { path: 'groups', component: Groups },
       { path: 'groups/:groupId', component: GroupDetails },
       { path: 'restaurants', component: Restaurants },
+      { path: 'restaurants/new', component: RestaurantDetails },
       { path: 'restaurants/:restaurantId', component: RestaurantDetails },
       { path: 'profile', component: UserProfile },
     ],

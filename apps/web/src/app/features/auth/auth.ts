@@ -10,6 +10,7 @@ import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmButton } from '@spartan-ng/helm/button';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideEye, lucideEyeOff } from '@ng-icons/lucide';
+import { toast } from '@spartan-ng/brain/sonner';
 
 @Component({
   selector: 'mol-auth',
@@ -39,10 +40,13 @@ export class Auth {
   }
 
   protected signIn(): void {
-    this.authService
-      .signIn(this.email(), this.password())
-      .subscribe((response) => {
-        console.log(response);
-      });
+    this.authService.signIn(this.email(), this.password()).subscribe({
+      error: (err) => {
+        console.log('err');
+        toast.error('An error occurred while signing in', {
+          description: err.message,
+        });
+      },
+    });
   }
 }

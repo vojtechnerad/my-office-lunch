@@ -1,3 +1,4 @@
+<button hlmBtn routerLink="/restaurants/new">Add New</button>
 <hlm-item-group>
   @for (item of restaurants(); track item.id) {
     <a hlmItem variant="default" routerLink="/restaurants/{{ item.id }}">

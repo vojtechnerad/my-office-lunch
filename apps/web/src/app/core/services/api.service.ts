@@ -14,7 +14,7 @@ import { TUserProfile } from '../../features/user-profile/types/user-profile.typ
   providedIn: 'root',
 })
 export class ApiService {
-  private readonly apiUrl = 'http://localhost:3000';
+  private readonly apiUrl = 'https://nzpmw83h-3000.euw.devtunnels.ms';
 
   private readonly http = inject(HttpClient);
 

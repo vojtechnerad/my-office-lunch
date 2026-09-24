@@ -12,10 +12,18 @@ import { HlmCardImports } from '@spartan-ng/helm/card';
 import { HlmItemImports } from '@spartan-ng/helm/item';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideChevronRight } from '@ng-icons/lucide';
+import { HlmButton, HlmButtonImports } from '@spartan-ng/helm/button';
 
 @Component({
   selector: 'mol-restaurants',
-  imports: [RouterModule, HlmCardImports, HlmItemImports, NgIcon],
+  imports: [
+    RouterModule,
+    HlmButtonImports,
+    HlmCardImports,
+    HlmItemImports,
+    NgIcon,
+    HlmButton,
+  ],
   providers: [
     provideIcons({
       lucideChevronRight,

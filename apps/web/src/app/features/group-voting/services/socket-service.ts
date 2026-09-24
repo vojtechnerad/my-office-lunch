@@ -16,7 +16,7 @@ export class SocketService {
   >;
 
   public connect(jwtToken: string): void {
-    this.socket = io('http://localhost:3000', {
+    this.socket = io('https://nzpmw83h-3000.euw.devtunnels.ms', {
       transports: ['websocket'],
       auth: {
         token: jwtToken,

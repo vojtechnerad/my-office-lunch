@@ -127,7 +127,7 @@ export class GroupVoting implements OnInit {
       context: {
         dailyMenuUrl: dailyMenuUrl,
       },
-      contentClass: 'h-[90dvh] w-[90dvw]',
+      contentClass: 'h-[90dvh] w-[90dvw] max-w-none sm:max-w-none',
     });
     // const modal = this.modal.create({
     //   nzTitle: `Daily Menu for ${restaurantName}`,

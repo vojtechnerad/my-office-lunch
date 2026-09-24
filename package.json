@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "db:up": "docker compose up -d postgres",
-    "db:up:tmp": "docker compose -f docker-compose.test.yaml up -d postgres-tmp"
+    "db:up:tmp": "docker compose -f docker-compose.test.yaml up -d postgres-tmp",
+    "start": "nx run-many --target=serve --projects=web,api --parallel"
   },
   "private": true,
   "dependencies": {
