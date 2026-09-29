@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { LoginResponse } from 'contracts/auth.contracts';
+import { BACKEND_URL } from '../../shared/config';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class AuthService {
 
   public signIn(email: string, password: string): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>('https://nzpmw83h-3000.euw.devtunnels.ms/login', {
+      .post<LoginResponse>(`${BACKEND_URL}/login`, {
         email,
         password,
       })

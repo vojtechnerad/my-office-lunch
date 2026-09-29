@@ -9,12 +9,13 @@ import { GetGroupByIdResponse } from 'contracts/groups.contracts';
 import { GroupDetails } from '../../shared/types/group.types';
 import { MeResponse } from 'contracts/user.contracts';
 import { TUserProfile } from '../../features/user-profile/types/user-profile.types';
+import { BACKEND_URL } from '../../shared/config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  private readonly apiUrl = 'https://nzpmw83h-3000.euw.devtunnels.ms';
+  private readonly apiUrl = BACKEND_URL;
 
   private readonly http = inject(HttpClient);
 
