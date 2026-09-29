@@ -33,11 +33,17 @@
               </li>
             }
             @for (item of myGroups(); track item.id) {
-              <li hlmSidebarMenuItem routerLink="/group-voting/{{ item.id }}">
-                <button hlmSidebarMenuButton>
+              <li hlmSidebarMenuItem>
+                <a
+                  hlmSidebarMenuButton
+                  routerLink="/group-voting/{{ item.id }}"
+                  routerLinkActive
+                  #groupLink="routerLinkActive"
+                  [isActive]="groupLink.isActive"
+                >
                   <ng-icon name="lucideUsers" />
                   <span>{{ item.name }}</span>
-                </button>
+                </a>
               </li>
             }
           </ul>
@@ -49,19 +55,31 @@
         <div hlmSidebarGroupContent>
           <ul hlmSidebarMenu>
             <li hlmSidebarMenuItem>
-              <button hlmSidebarMenuButton routerLink="/restaurants">
+              <a
+                hlmSidebarMenuButton
+                routerLink="/restaurants"
+                routerLinkActive
+                #restaurantsLink="routerLinkActive"
+                [isActive]="restaurantsLink.isActive"
+              >
                 <ng-icon name="lucideCookingPot" />
                 <span>Restaurants</span>
-              </button>
+              </a>
             </li>
           </ul>
 
           <ul hlmSidebarMenu>
             <li hlmSidebarMenuItem>
-              <button hlmSidebarMenuButton routerLink="/groups">
+              <a
+                hlmSidebarMenuButton
+                routerLink="/groups"
+                routerLinkActive
+                #groupsLink="routerLinkActive"
+                [isActive]="groupsLink.isActive"
+              >
                 <ng-icon name="lucideUsers" />
                 <span>Groups</span>
-              </button>
+              </a>
             </li>
           </ul>
         </div>
