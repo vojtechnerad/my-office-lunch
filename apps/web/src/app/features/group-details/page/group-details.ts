@@ -8,10 +8,11 @@ import {
 import { ApiService } from '../../../core/services/api.service';
 import { ActivatedRoute } from '@angular/router';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { Blobatar } from '../../../shared/components/blobatar/blobatar';
 
 @Component({
   selector: 'mol-group-details',
-  imports: [NzButtonComponent],
+  imports: [NzButtonComponent, Blobatar],
   templateUrl: './group-details.html',
   styleUrl: './group-details.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

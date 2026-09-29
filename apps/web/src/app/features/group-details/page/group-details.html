@@ -1,17 +1,25 @@
 @if (group()) {
-<h1>{{ group().name }}</h1>
+  <h1>{{ group().name }}</h1>
 
-<!-- Join group button -->
-<!-- <button (click)="joinGroup()">Join Group</button> -->
-<button nz-button nzType="primary" (click)="joinGroup()">Join Group</button>
+  <!-- Join group button -->
+  <!-- <button (click)="joinGroup()">Join Group</button> -->
+  <button nz-button nzType="primary" (click)="joinGroup()">Join Group</button>
 
-<!-- List of members -->
-<h2>Members</h2>
-@for (member of group().members; track member.id) {
-<p>{{ member.name }}</p>
+  <!-- List of members -->
+  <h2>Members</h2>
+  @for (member of group().members; track member.id) {
+    <div class="flex items-center space-x-2">
+      <mol-blobatar
+        [identifier]="member.email"
+        [size]="30"
+        animate="always"
+      ></mol-blobatar>
+      <p>{{ member.name }}</p>
+    </div>
+  }
+
+  <h2>Favorite Restaurants</h2>
+  @for (restaurant of group().favoriteRestaurants; track restaurant.id) {
+    <p>{{ restaurant.name }}</p>
+  }
 }
-
-<h2>Favorite Restaurants</h2>
-@for (restaurant of group().favoriteRestaurants; track restaurant.id) {
-<p>{{ restaurant.name }}</p>
-} }

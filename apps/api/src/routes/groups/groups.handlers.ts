@@ -11,6 +11,7 @@ import {
 } from './groups.routes';
 import { and, eq } from 'drizzle-orm';
 import { HttpStatusCodes } from '../../helpers/http-status-codes.helper';
+import { email } from 'zod';
 
 export const createGroupHandler: AppRouteHandler<CreateGroupRoute> = async (
   c,
@@ -75,6 +76,7 @@ export const getGroupByIdHandler: AppRouteHandler<GetGroupByIdRoute> = async (
     .select({
       id: DbSchema.users.id,
       name: DbSchema.users.name,
+      email: DbSchema.users.email,
     })
     .from(DbSchema.usersToGroups)
     .innerJoin(
