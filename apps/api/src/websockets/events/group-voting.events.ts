@@ -3,6 +3,7 @@ import { AppSocket, AppSocketServer } from '../../types';
 import {
   deleteGroupRestaurantVote,
   getCurrentVotingResults,
+  getMyVotes,
   isUserMemberOfGroup,
   saveGroupRestaurantVote,
 } from '../database-queries';
@@ -15,8 +16,12 @@ export const registerGroupVotingEvents = (
     socket.join(`${groupId}`);
 
     const results = await getCurrentVotingResults(groupId);
+    const myVotes = await getMyVotes({
+      groupId,
+      userId: socket.data.jwtPayload.sub,
+    });
 
-    socket.emit('group:joined', { results });
+    socket.emit('group:joined', { results, myVotes });
   });
 
   socket.on('vote:change', async ({ groupId, restaurantId, vote }) => {

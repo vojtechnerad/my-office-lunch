@@ -49,7 +49,7 @@ export type VotingOption = 'preferred' | 'neutral' | 'unwanted';
 export class VotingRadioButton {
   public valueChange = output<VotingOption | null>();
 
-  protected readonly selectedValue = model<VotingOption | null>(null);
+  public readonly selectedValue = model<VotingOption | null>(null);
 
   handleRadioChange(value: VotingOption): void {
     this.valueChange.emit(value);

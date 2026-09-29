@@ -23,6 +23,7 @@ import { SocketService } from '../services/socket-service';
 import { GroupDetails } from '../../../shared/types/group.types';
 import {
   GroupJoinedPayload,
+  RestaurantVote,
   RestaurantVotingResult,
   VoteUpdatedResultsPayload,
 } from 'contracts/websockets.contracts';
@@ -51,6 +52,10 @@ import { HlmDialogImports, HlmDialogService } from '@spartan-ng/helm/dialog';
 export class GroupVoting implements OnInit {
   protected readonly group = signal<GroupDetails | null>(null);
   protected readonly groupId = signal<string | null>(null);
+  protected readonly myVotes = signal<Record<
+    string,
+    RestaurantVote | null
+  > | null>(null);
   protected readonly results = signal<Array<RestaurantVotingResult> | null>(
     null,
   );
@@ -76,11 +81,17 @@ export class GroupVoting implements OnInit {
         this.socketService.connect(token);
         this.socketService.emit('group:join', { groupId });
 
-        this.socketService.on('group:joined').subscribe(({ results }) => {
-          const typedResults = results as GroupJoinedPayload['results'];
+        this.socketService
+          .on('group:joined')
+          .subscribe(({ results, myVotes }) => {
+            const typedResults = results as GroupJoinedPayload['results'];
+            const typedMyVotes = myVotes as GroupJoinedPayload['myVotes'];
 
-          this.results.set(typedResults.length > 0 ? typedResults : null);
-        });
+            this.results.set(typedResults.length > 0 ? typedResults : null);
+            this.myVotes.set(
+              Object.keys(typedMyVotes).length > 0 ? typedMyVotes : null,
+            );
+          });
 
         this.socketService
           .on('vote:updated-results')
@@ -96,6 +107,7 @@ export class GroupVoting implements OnInit {
         this.socketService.disconnect();
         this.group.set(null);
         this.results.set(null);
+        this.myVotes.set(null);
       });
     });
   }

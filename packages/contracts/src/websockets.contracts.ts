@@ -16,6 +16,7 @@ export type GroupJoinPayload = {
 
 export type GroupJoinedPayload = {
   results: RestaurantVotingResult[];
+  myVotes: Record<string, RestaurantVote | null>;
 };
 
 export type VoteChangePayload = {

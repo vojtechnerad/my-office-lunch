@@ -31,6 +31,7 @@
         }
 
         <mol-voting-radio-button
+          [selectedValue]="myVotes()?.[restaurant.id] ?? null"
           (valueChange)="handleVoteChange($event, restaurant.id)"
         />
       </div>

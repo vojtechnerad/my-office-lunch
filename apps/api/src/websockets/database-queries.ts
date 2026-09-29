@@ -55,6 +55,42 @@ export const getCurrentVotingResults = async (
   );
 };
 
+export const getMyVotes = async ({
+  groupId,
+  userId,
+}: {
+  groupId: string;
+  userId: string;
+}): Promise<Record<string, RestaurantVote | null>> => {
+  const { startOfDayUTC, endOfDayUTC } = getUtcDayBounds(new Date());
+
+  const myVotes = await db
+    .select({
+      restaurantId: DbSchema.groupRestaurantVotes.restaurantId,
+      vote: DbSchema.groupRestaurantVotes.vote,
+    })
+    .from(DbSchema.groupRestaurantVotes)
+    .where(
+      and(
+        eq(DbSchema.groupRestaurantVotes.groupId, groupId),
+        eq(DbSchema.groupRestaurantVotes.userId, userId),
+        between(
+          DbSchema.groupRestaurantVotes.createdAt,
+          startOfDayUTC,
+          endOfDayUTC,
+        ),
+      ),
+    );
+
+  return myVotes.reduce(
+    (accumulator, currentVote) => {
+      accumulator[currentVote.restaurantId] = currentVote.vote;
+      return accumulator;
+    },
+    {} as Record<string, RestaurantVote | null>,
+  );
+};
+
 export const saveGroupRestaurantVote = async ({
   groupId,
   restaurantId,
