@@ -43,6 +43,11 @@
       </button>
     </div>
 
-    <button hlmBtn type="submit">Sign In</button>
+    <button hlmBtn type="submit" [disabled]="isSigningIn()">
+      @if (isSigningIn()) {
+        <hlm-spinner />
+      }
+      Sign In
+    </button>
   </form>
 </div>
