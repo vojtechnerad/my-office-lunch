@@ -95,17 +95,14 @@
         side="right"
         align="start"
       >
-        <hlm-avatar>
-          <div hlmAvatarImage>
-            <ng-icon name="lucideChevronsUpDown"></ng-icon>
-          </div>
-          <!-- <img
-            hlmAvatarImage
-            src="/assets/avatar.png"
-            alt="spartan logo. Resembling a spartanic shield"
-          /> -->
-          <!-- <span hlmAvatarFallback>{{ name }}</span> -->
-        </hlm-avatar>
+        <!-- <hlm-avatar> -->
+        <mol-blobatar
+          [identifier]="email"
+          [size]="40"
+          animate="always"
+          [followPointer]="true"
+        />
+        <!-- </hlm-avatar> -->
 
         <div class="flex flex-col items-start">
           <span>{{ name }}</span>

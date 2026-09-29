@@ -9,6 +9,7 @@ export const LOGIN_RESPONSE_SCHEMA = z.object({
   token: z.string(),
   id: z.string(),
   name: z.string(),
+  email: z.email(),
 });
 
 export const REGISTER_REQUEST_SCHEMA = z.object({

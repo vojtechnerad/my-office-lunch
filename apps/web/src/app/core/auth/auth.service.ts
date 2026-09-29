@@ -32,6 +32,7 @@ export class AuthService {
           localStorage.setItem('token', response.token);
           localStorage.setItem('name', response.name);
           localStorage.setItem('id', response.id);
+          localStorage.setItem('email', response.email);
 
           // Prompt user to save credentials after successful login
           if ('credentials' in navigator && 'PasswordCredential' in window) {

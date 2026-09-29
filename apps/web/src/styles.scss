@@ -8,6 +8,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'blobatar/motion.css';
+@import 'blobatar/gaze.css';
+
+mol-blobatar .blobatar-host {
+  --mo-track-travel: 3px;
+}
+mol-blobatar > div:hover svg .mo-root {
+  --mo-amp: 1;
+  transform: translateY(-1.5px) scale(1.04);
+}
+
 // @import 'ng-zorro-antd/ng-zorro-antd.dark.min.css';
 /* You can add global styles to this file, and also import other style files */
 

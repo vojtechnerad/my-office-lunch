@@ -26,6 +26,7 @@ import { HlmDropdownMenuImports } from '@spartan-ng/helm/dropdown-menu';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmAvatarImports } from '@spartan-ng/helm/avatar';
 import { HlmSkeletonImports } from '@spartan-ng/helm/skeleton';
+import { Blobatar } from '../../shared/components/blobatar/blobatar';
 
 @Component({
   selector: 'mol-main-layout',
@@ -38,6 +39,7 @@ import { HlmSkeletonImports } from '@spartan-ng/helm/skeleton';
     HlmAvatarImports,
     NgIcon,
     HlmSkeletonImports,
+    Blobatar,
   ],
   providers: [
     provideIcons({
@@ -61,6 +63,7 @@ export class MainLayout implements OnInit {
   protected myGroups = signal<Array<{ id: string; name: string }>>([]);
   protected isGroupsLoading = signal(true);
   protected name = localStorage.getItem('name') || '';
+  protected email = localStorage.getItem('email') || '';
 
   private authService = inject(AuthService);
   private apiService = inject(ApiService);
