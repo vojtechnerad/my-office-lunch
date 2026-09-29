@@ -12,45 +12,103 @@
   </ol>
 </nav>
 
-@if (group()) {
-  <h1 class="text-4xl">{{ group()?.name }}</h1>
-  @for (restaurant of group()?.favoriteRestaurants; track restaurant.id) {
-    <div class="py-2 px-1">
-      <mol-restaurant-row [restaurant]="restaurant" class="pb-4" />
-      <div class="flex gap-2">
-        @if (restaurant.dailyMenuUrl) {
-          <button
-            hlmBtn
-            variant="outline"
-            (click)="
-              handleOpenDailyMenuModal(restaurant.name, restaurant.dailyMenuUrl)
-            "
+<hlm-tabs tab="voting">
+  <hlm-tabs-list variant="line">
+    <button hlmTabsTrigger="voting">Voting</button>
+    <button hlmTabsTrigger="results">Results</button>
+  </hlm-tabs-list>
+
+  <div hlmTabsContent="voting">
+    @if (group()) {
+      @for (restaurant of group()?.favoriteRestaurants; track restaurant.id) {
+        <div class="py-2 px-1">
+          <mol-restaurant-row [restaurant]="restaurant" class="pb-4" />
+          <div class="flex gap-2">
+            @if (restaurant.dailyMenuUrl) {
+              <button
+                hlmBtn
+                variant="outline"
+                (click)="
+                  handleOpenDailyMenuModal(
+                    restaurant.name,
+                    restaurant.dailyMenuUrl
+                  )
+                "
+              >
+                Daily Menu
+              </button>
+            }
+
+            <mol-voting-radio-button
+              [selectedValue]="myVotes()?.[restaurant.id] ?? null"
+              (valueChange)="handleVoteChange($event, restaurant.id)"
+            />
+          </div>
+        </div>
+      } @empty {
+        <p>No favorite restaurants available.</p>
+      }
+    }
+  </div>
+
+  <div hlmTabsContent="results">
+    @if (filteredResults()) {
+      <span>Filters</span>
+      <button
+        hlmBtn
+        [variant]="appliedFilter() === 'all' ? 'secondary' : 'ghost'"
+        (click)="handleFilterChange('all')"
+      >
+        All
+      </button>
+      <button
+        hlmBtn
+        [variant]="
+          appliedFilter() === 'excluding-unwanted' ? 'secondary' : 'ghost'
+        "
+        (click)="handleFilterChange('excluding-unwanted')"
+      >
+        Excluding unwanted
+      </button>
+      @for (result of filteredResults(); track result.restaurantId) {
+        <hlm-collapsible #collapsible="brnCollapsible">
+          <div
+            class="flex items-center justify-between p-4 border rounded mb-2"
           >
-            Daily Menu
-          </button>
-        }
+            <span
+              hlmBadge
+              [ngClass]="{
+                'bg-amber-500': result.position === 1,
+                'bg-slate-400': result.position === 2,
+                'bg-amber-700': result.position === 3,
+              }"
+              [variant]="result.position > 3 ? 'secondary' : 'default'"
+              >{{ result.position }}.</span
+            >
 
-        <mol-voting-radio-button
-          [selectedValue]="myVotes()?.[restaurant.id] ?? null"
-          (valueChange)="handleVoteChange($event, restaurant.id)"
-        />
-      </div>
-    </div>
-  } @empty {
-    <p>No favorite restaurants available.</p>
-  }
-}
-
-<h2 class="text-2xl mt-8">Voting Results</h2>
-@if (results()) {
-  @for (result of results(); track result.restaurantId) {
-    <div class="flex items-center justify-between p-4 border rounded mb-2">
-      <span>{{ result.restaurantName }}</span>
-      <span class="text-sm text-yellow-500">{{ result.votes.preferred }}</span>
-      <span class="text-sm text-green-500">{{ result.votes.neutral }}</span>
-      <span class="text-sm text-red-500">{{ result.votes.unwanted }}</span>
-    </div>
-  }
-} @else {
-  <p>No votes yet.</p>
-}
+            <span>{{ result.restaurantName }}</span>
+            <div>
+              <span hlmBadge variant="secondary"
+                >Score: {{ result.score }}</span
+              >
+              @if (result.votes.unwanted > 0) {
+                <span hlmBadge variant="destructive"
+                  >Against: {{ result.votes.unwanted }}</span
+                >
+              }
+            </div>
+            <button hlmBtn variant="secondary" hlmCollapsibleTrigger>
+              Details {{ collapsible.expanded() ? '▲' : '▼' }}
+            </button>
+          </div>
+          <hlm-collapsible-content>
+            Yes. Free to use for personal and commercial projects. No
+            attribution required.
+          </hlm-collapsible-content>
+        </hlm-collapsible>
+      }
+    } @else {
+      <p>No votes yet.</p>
+    }
+  </div>
+</hlm-tabs>

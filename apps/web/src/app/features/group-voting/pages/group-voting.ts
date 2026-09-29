@@ -1,17 +1,16 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   effect,
   inject,
   OnInit,
   signal,
   ViewContainerRef,
 } from '@angular/core';
-import {
-  ActivatedRoute,
-  RouterLinkWithHref,
-  RouterModule,
-} from '@angular/router';
+import { HlmCollapsibleImports } from '@spartan-ng/helm/collapsible';
+import { HlmTabsImports } from '@spartan-ng/helm/tabs';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { CommonModule } from '@angular/common';
 import {
@@ -32,6 +31,7 @@ import { DailyMenuModal } from '../components/daily-menu-modal/daily-menu-modal'
 import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmBreadcrumbImports } from '@spartan-ng/helm/breadcrumb';
 import { HlmDialogImports, HlmDialogService } from '@spartan-ng/helm/dialog';
+import { HlmBadgeImports } from '@spartan-ng/helm/badge';
 
 @Component({
   selector: 'mol-group-voting',
@@ -40,9 +40,12 @@ import { HlmDialogImports, HlmDialogService } from '@spartan-ng/helm/dialog';
     NzModalModule,
     VotingRadioButton,
     RestaurantRow,
+    HlmBadgeImports,
     HlmButtonImports,
     HlmBreadcrumbImports,
+    HlmCollapsibleImports,
     HlmDialogImports,
+    HlmTabsImports,
     RouterModule,
   ],
   templateUrl: './group-voting.html',
@@ -58,6 +61,40 @@ export class GroupVoting implements OnInit {
   > | null>(null);
   protected readonly results = signal<Array<RestaurantVotingResult> | null>(
     null,
+  );
+  protected readonly appliedFilter = signal<'all' | 'excluding-unwanted'>(
+    'all',
+  );
+  protected filteredResults = computed(
+    (): Array<
+      RestaurantVotingResult & { score: number; position: number }
+    > | null => {
+      const sortedResults = this.results()
+        ?.map((result) => ({
+          ...result,
+          score: result.votes.preferred * 2 + result.votes.neutral,
+        }))
+        .sort((a, b) => b.score - a.score);
+      let previousScore: number | undefined;
+      let position = 0;
+      const rankedResults = sortedResults?.map((result, index) => {
+        if (result.score !== previousScore) {
+          position = index + 1;
+          previousScore = result.score;
+        }
+
+        return {
+          ...result,
+          position,
+        };
+      });
+      const filter = this.appliedFilter();
+      if (!rankedResults) return null;
+      if (filter === 'all') return rankedResults;
+      if (filter === 'excluding-unwanted')
+        return rankedResults.filter((result) => result.votes.unwanted === 0);
+      return rankedResults;
+    },
   );
 
   private readonly route = inject(ActivatedRoute);
@@ -128,6 +165,10 @@ export class GroupVoting implements OnInit {
         vote,
       });
     }
+  }
+
+  protected handleFilterChange(filter: 'all' | 'excluding-unwanted') {
+    this.appliedFilter.set(filter);
   }
 
   protected handleOpenDailyMenuModal(
