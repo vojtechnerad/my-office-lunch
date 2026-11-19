@@ -16,11 +16,19 @@ export const getCurrentVotingResults = async (
       restaurantId: DbSchema.groupRestaurantVotes.restaurantId,
       restaurantName: DbSchema.restaurants.name,
       vote: DbSchema.groupRestaurantVotes.vote,
+      userId: DbSchema.users.id,
+      username: DbSchema.users.name,
+      email: DbSchema.users.email,
+      createdAt: DbSchema.groupRestaurantVotes.createdAt,
     })
     .from(DbSchema.groupRestaurantVotes)
     .innerJoin(
       DbSchema.restaurants,
       eq(DbSchema.groupRestaurantVotes.restaurantId, DbSchema.restaurants.id),
+    )
+    .innerJoin(
+      DbSchema.users,
+      eq(DbSchema.groupRestaurantVotes.userId, DbSchema.users.id),
     )
     .where(
       and(
@@ -34,23 +42,38 @@ export const getCurrentVotingResults = async (
     );
 
   return Object.values(
-    currentVotes.reduce(
+    currentVotes.reduce<Record<string, RestaurantVotingResult>>(
       (accumulator, currentVote) => {
-        const { restaurantId, vote } = currentVote;
+        const restaurantId = currentVote.restaurantId;
+        const vote = currentVote.vote as RestaurantVote;
 
-        if (!accumulator[restaurantId]) {
-          accumulator[restaurantId] = {
-            restaurantId,
-            restaurantName: currentVote.restaurantName,
-            votes: { preferred: 0, neutral: 0, unwanted: 0 },
-          };
-        }
+        const result = (accumulator[restaurantId] ??= {
+          restaurantId,
+          restaurantName: currentVote.restaurantName,
+          votes: {
+            preferred: 0,
+            neutral: 0,
+            unwanted: 0,
+          },
+          details: {
+            preferred: {},
+            neutral: {},
+            unwanted: {},
+          },
+        });
 
-        accumulator[restaurantId].votes[vote] += 1;
+        result.votes[vote] += 1;
+
+        result.details[vote][currentVote.userId] = {
+          timestamp: currentVote.createdAt,
+          username: currentVote.username,
+          userId: currentVote.userId,
+          email: currentVote.email,
+        };
 
         return accumulator;
       },
-      {} as Record<string, RestaurantVotingResult>,
+      {},
     ),
   );
 };

@@ -102,8 +102,57 @@
             </button>
           </div>
           <hlm-collapsible-content>
-            Yes. Free to use for personal and commercial projects. No
-            attribution required.
+            <div class="grid place-items-center">
+              <div class="grid grid-cols-3 gap-4 w-[600px]">
+                <div>
+                  <h3 class="text-lg font-semibold">Preferred</h3>
+                  @for (
+                    item of result.details.preferred | keyvalue;
+                    track item.key
+                  ) {
+                    <div class="flex flex-row items-center gap-2">
+                      <mol-blobatar
+                        [identifier]="item.value.email"
+                        [size]="20"
+                      />
+                      <span> {{ item.value.username }}</span>
+                    </div>
+                  }
+                </div>
+
+                <div>
+                  <h3 class="text-lg font-semibold">Neutral</h3>
+                  @for (
+                    item of result.details.neutral | keyvalue;
+                    track item.key
+                  ) {
+                    <div class="flex flex-row items-center gap-2">
+                      <mol-blobatar
+                        [identifier]="item.value.email"
+                        [size]="20"
+                      />
+                      <span> {{ item.value.username }}</span>
+                    </div>
+                  }
+                </div>
+
+                <div>
+                  <h3 class="text-lg font-semibold">Unwanted</h3>
+                  @for (
+                    item of result.details.unwanted | keyvalue;
+                    track item.key
+                  ) {
+                    <div class="flex flex-row items-center gap-2">
+                      <mol-blobatar
+                        [identifier]="item.value.email"
+                        [size]="20"
+                      />
+                      <span> {{ item.value.username }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
           </hlm-collapsible-content>
         </hlm-collapsible>
       }

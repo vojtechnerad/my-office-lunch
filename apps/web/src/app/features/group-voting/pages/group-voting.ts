@@ -32,6 +32,7 @@ import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmBreadcrumbImports } from '@spartan-ng/helm/breadcrumb';
 import { HlmDialogImports, HlmDialogService } from '@spartan-ng/helm/dialog';
 import { HlmBadgeImports } from '@spartan-ng/helm/badge';
+import { Blobatar } from '../../../shared/components/blobatar/blobatar';
 
 @Component({
   selector: 'mol-group-voting',
@@ -46,6 +47,7 @@ import { HlmBadgeImports } from '@spartan-ng/helm/badge';
     HlmCollapsibleImports,
     HlmDialogImports,
     HlmTabsImports,
+    Blobatar,
     RouterModule,
   ],
   templateUrl: './group-voting.html',
