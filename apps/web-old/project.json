@@ -1,23 +1,23 @@
 {
-  "name": "web",
+  "name": "web-old",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "mol",
-  "sourceRoot": "apps/web/src",
+  "sourceRoot": "apps/web-old/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/web",
-        "browser": "apps/web/src/main.ts",
-        "tsConfig": "apps/web/tsconfig.app.json",
+        "outputPath": "dist/apps/web-old",
+        "browser": "apps/web-old/src/main.ts",
+        "tsConfig": "apps/web-old/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/web/public"
+            "input": "apps/web-old/public"
           },
           {
             "glob": "**/*",
@@ -25,7 +25,7 @@
             "output": "/assets/"
           }
         ],
-        "styles": ["apps/web/src/styles.scss"]
+        "styles": ["apps/web-old/src/styles.scss"]
       },
       "configurations": {
         "development": {
@@ -59,10 +59,10 @@
       },
       "configurations": {
         "development": {
-          "buildTarget": "web:build:development"
+          "buildTarget": "web-old:build:development"
         },
         "production": {
-          "buildTarget": "web:build:production"
+          "buildTarget": "web-old:build:production"
         }
       },
       "defaultConfiguration": "development"
@@ -74,9 +74,9 @@
       "continuous": true,
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "web:build",
+        "buildTarget": "web-old:build",
         "port": 5173,
-        "staticFilePath": "dist/apps/web/browser",
+        "staticFilePath": "dist/apps/web-old/browser",
         "spa": true
       }
     }

@@ -4,7 +4,7 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "MOL Web",
+      "name": "MOL Web Old",
       "url": "http://localhost:5173",
       "webRoot": "${workspaceFolder}"
     }

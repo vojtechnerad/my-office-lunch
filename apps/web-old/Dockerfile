@@ -12,11 +12,11 @@ RUN npm ci
 # Copy packages (local dependencies)
 COPY packages/ ./packages/
 
-# Copy API source
-COPY apps/web/ ./apps/web/
+# Copy web-old source
+COPY apps/web-old/ ./apps/web-old/
 
 # Build using Nx
-RUN npx nx build web --configuration=production
+RUN npx nx build web-old --configuration=production
 
 # Runtime stage  
 FROM node:26-alpine
@@ -24,13 +24,13 @@ FROM node:26-alpine
 WORKDIR /app
 
 # Copy generated package.json from build output
-COPY --from=builder /app/dist/apps/web/package*.json ./
+COPY --from=builder /app/dist/apps/web-old/package*.json ./
 
 # Install only production dependencies
 RUN npm ci --omit=dev
 
 # Copy built application
-COPY --from=builder /app/dist/apps/web/ ./
+COPY --from=builder /app/dist/apps/web-old/ ./
 
 EXPOSE 5173
 

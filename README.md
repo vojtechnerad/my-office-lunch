@@ -8,6 +8,8 @@
 
 ## Run tasks
 
+Start the legacy web app (`apps/web-old`) and API together with `npm start`.
+
 ## Database
 
 The API and Drizzle config read `DATABASE_URL` from the environment. If it is not set, the workspace falls back to the local development database on `postgresql://user:development-database-password@localhost:5432/mol`.
@@ -40,19 +42,19 @@ If you need a different temporary database for tests, set `VITEST_DATABASE_URL` 
 To run the dev server for your app, use:
 
 ```sh
-npx nx serve my-office-lunch
+npx nx serve web-old
 ```
 
 To create a production bundle:
 
 ```sh
-npx nx build my-office-lunch
+npx nx build web-old
 ```
 
 To see all available targets to run for a project, run:
 
 ```sh
-npx nx show project my-office-lunch
+npx nx show project web-old
 ```
 
 These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
