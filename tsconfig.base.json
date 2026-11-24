@@ -15,7 +15,134 @@
     "skipDefaultLibCheck": true,
     "paths": {
       "database": ["./packages/database/src/index.ts"],
-      "contracts/*": ["./packages/contracts/src/*"]
+      "contracts/*": ["./packages/contracts/src/*"],
+      "@spartan-ng/helm/accordion": [
+        "./packages/spartan-ui/accordion/src/index.ts"
+      ],
+      "@spartan-ng/helm/alert": ["./packages/spartan-ui/alert/src/index.ts"],
+      "@spartan-ng/helm/alert-dialog": [
+        "./packages/spartan-ui/alert-dialog/src/index.ts"
+      ],
+      "@spartan-ng/helm/aspect-ratio": [
+        "./packages/spartan-ui/aspect-ratio/src/index.ts"
+      ],
+      "@spartan-ng/helm/autocomplete": [
+        "./packages/spartan-ui/autocomplete/src/index.ts"
+      ],
+      "@spartan-ng/helm/avatar": ["./packages/spartan-ui/avatar/src/index.ts"],
+      "@spartan-ng/helm/badge": ["./packages/spartan-ui/badge/src/index.ts"],
+      "@spartan-ng/helm/breadcrumb": [
+        "./packages/spartan-ui/breadcrumb/src/index.ts"
+      ],
+      "@spartan-ng/helm/button": ["./packages/spartan-ui/button/src/index.ts"],
+      "@spartan-ng/helm/button-group": [
+        "./packages/spartan-ui/button-group/src/index.ts"
+      ],
+      "@spartan-ng/helm/calendar": [
+        "./packages/spartan-ui/calendar/src/index.ts"
+      ],
+      "@spartan-ng/helm/card": ["./packages/spartan-ui/card/src/index.ts"],
+      "@spartan-ng/helm/carousel": [
+        "./packages/spartan-ui/carousel/src/index.ts"
+      ],
+      "@spartan-ng/helm/checkbox": [
+        "./packages/spartan-ui/checkbox/src/index.ts"
+      ],
+      "@spartan-ng/helm/collapsible": [
+        "./packages/spartan-ui/collapsible/src/index.ts"
+      ],
+      "@spartan-ng/helm/combobox": [
+        "./packages/spartan-ui/combobox/src/index.ts"
+      ],
+      "@spartan-ng/helm/command": [
+        "./packages/spartan-ui/command/src/index.ts"
+      ],
+      "@spartan-ng/helm/context-menu": [
+        "./packages/spartan-ui/context-menu/src/index.ts"
+      ],
+      "@spartan-ng/helm/date-picker": [
+        "./packages/spartan-ui/date-picker/src/index.ts"
+      ],
+      "@spartan-ng/helm/dialog": ["./packages/spartan-ui/dialog/src/index.ts"],
+      "@spartan-ng/helm/drawer": ["./packages/spartan-ui/drawer/src/index.ts"],
+      "@spartan-ng/helm/dropdown-menu": [
+        "./packages/spartan-ui/dropdown-menu/src/index.ts"
+      ],
+      "@spartan-ng/helm/empty": ["./packages/spartan-ui/empty/src/index.ts"],
+      "@spartan-ng/helm/field": ["./packages/spartan-ui/field/src/index.ts"],
+      "@spartan-ng/helm/hover-card": [
+        "./packages/spartan-ui/hover-card/src/index.ts"
+      ],
+      "@spartan-ng/helm/input": ["./packages/spartan-ui/input/src/index.ts"],
+      "@spartan-ng/helm/input-group": [
+        "./packages/spartan-ui/input-group/src/index.ts"
+      ],
+      "@spartan-ng/helm/input-otp": [
+        "./packages/spartan-ui/input-otp/src/index.ts"
+      ],
+      "@spartan-ng/helm/item": ["./packages/spartan-ui/item/src/index.ts"],
+      "@spartan-ng/helm/kbd": ["./packages/spartan-ui/kbd/src/index.ts"],
+      "@spartan-ng/helm/label": ["./packages/spartan-ui/label/src/index.ts"],
+      "@spartan-ng/helm/menubar": [
+        "./packages/spartan-ui/menubar/src/index.ts"
+      ],
+      "@spartan-ng/helm/native-select": [
+        "./packages/spartan-ui/native-select/src/index.ts"
+      ],
+      "@spartan-ng/helm/navigation-menu": [
+        "./packages/spartan-ui/navigation-menu/src/index.ts"
+      ],
+      "@spartan-ng/helm/pagination": [
+        "./packages/spartan-ui/pagination/src/index.ts"
+      ],
+      "@spartan-ng/helm/popover": [
+        "./packages/spartan-ui/popover/src/index.ts"
+      ],
+      "@spartan-ng/helm/progress": [
+        "./packages/spartan-ui/progress/src/index.ts"
+      ],
+      "@spartan-ng/helm/radio-group": [
+        "./packages/spartan-ui/radio-group/src/index.ts"
+      ],
+      "@spartan-ng/helm/resizable": [
+        "./packages/spartan-ui/resizable/src/index.ts"
+      ],
+      "@spartan-ng/helm/scroll-area": [
+        "./packages/spartan-ui/scroll-area/src/index.ts"
+      ],
+      "@spartan-ng/helm/select": ["./packages/spartan-ui/select/src/index.ts"],
+      "@spartan-ng/helm/separator": [
+        "./packages/spartan-ui/separator/src/index.ts"
+      ],
+      "@spartan-ng/helm/sheet": ["./packages/spartan-ui/sheet/src/index.ts"],
+      "@spartan-ng/helm/sidebar": [
+        "./packages/spartan-ui/sidebar/src/index.ts"
+      ],
+      "@spartan-ng/helm/skeleton": [
+        "./packages/spartan-ui/skeleton/src/index.ts"
+      ],
+      "@spartan-ng/helm/slider": ["./packages/spartan-ui/slider/src/index.ts"],
+      "@spartan-ng/helm/sonner": ["./packages/spartan-ui/sonner/src/index.ts"],
+      "@spartan-ng/helm/spinner": [
+        "./packages/spartan-ui/spinner/src/index.ts"
+      ],
+      "@spartan-ng/helm/switch": ["./packages/spartan-ui/switch/src/index.ts"],
+      "@spartan-ng/helm/table": ["./packages/spartan-ui/table/src/index.ts"],
+      "@spartan-ng/helm/tabs": ["./packages/spartan-ui/tabs/src/index.ts"],
+      "@spartan-ng/helm/textarea": [
+        "./packages/spartan-ui/textarea/src/index.ts"
+      ],
+      "@spartan-ng/helm/toggle": ["./packages/spartan-ui/toggle/src/index.ts"],
+      "@spartan-ng/helm/toggle-group": [
+        "./packages/spartan-ui/toggle-group/src/index.ts"
+      ],
+      "@spartan-ng/helm/tooltip": [
+        "./packages/spartan-ui/tooltip/src/index.ts"
+      ],
+      "@spartan-ng/helm/typography": [
+        "./packages/spartan-ui/typography/src/index.ts"
+      ],
+      "@spartan-ng/helm/utils": ["./packages/spartan-ui/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

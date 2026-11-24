@@ -1,15 +1,44 @@
-<!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
-<nz-radio-group
+<hlm-toggle-group
+  type="single"
+  variant="outline"
+  [(ngModel)]="selectedValue"
+  (valueChange)="handleRadioChange($event)"
+>
+  <button
+    hlmToggleGroupItem
+    value="preferred"
+    aria-label="Preferred"
+    class="data-[state=on]:bg-yellow-100 data-[state=on]:text-yellow-700 dark:data-[state=on]:bg-yellow-900/30"
+    title="Preferred"
+  >
+    <ng-icon name="lucideThumbsUp" />
+  </button>
+
+  <button
+    hlmToggleGroupItem
+    value="neutral"
+    aria-label="Neutral"
+    class="data-[state=on]:bg-slate-100 data-[state=on]:text-slate-700 dark:data-[state=on]:bg-slate-800"
+    title="Neutral"
+  >
+    <ng-icon name="lucideMeh" />
+  </button>
+
+  <button
+    hlmToggleGroupItem
+    value="unwanted"
+    aria-label="Unwanted"
+    class="data-[state=on]:bg-red-100 data-[state=on]:text-red-700 dark:data-[state=on]:bg-red-900/30"
+    title="Unwanted"
+  >
+    <ng-icon name="lucideThumbsDown" />
+  </button>
+</hlm-toggle-group>
+<!-- <nz-radio-group
   [(ngModel)]="selectedValue"
   (ngModelChange)="handleRadioChange($event)"
 >
   <label nz-radio-button nzValue="preferred" class="bg-red">P referuji</label>
   <label nz-radio-button nzValue="neutral">Klidně</label>
   <label nz-radio-button nzValue="unwanted">Nechci</label>
-</nz-radio-group>
-
-@if (selectedValue()) {
-<button nz-button nzType="text" nzDanger (click)="deselectValue()">
-  <nz-icon nzType="close" nzTheme="outline" />
-</button>
-}
+</nz-radio-group> -->

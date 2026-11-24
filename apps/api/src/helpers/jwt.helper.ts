@@ -15,7 +15,7 @@ export async function signJwt(payload: JwtPayload) {
       alg: 'HS256',
     })
     .setIssuedAt()
-    .setExpirationTime('15m')
+    .setExpirationTime('120m')
     .sign(secret);
 }
 

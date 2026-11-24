@@ -1,0 +1,5 @@
+{
+  "componentsPath": "packages/spartan-ui",
+  "importAlias": "@spartan-ng/helm",
+  "style": "nova"
+}

@@ -1,4 +1,5 @@
 import { z } from '@hono/zod-openapi';
+import { email } from 'zod';
 
 export const CREATE_GROUP_REQUEST_SCHEMA = z.object({
   name: z.string(),
@@ -24,12 +25,14 @@ export const GET_GROUP_BY_ID_RESPONSE_SCHEMA = z.object({
       name: z.string(),
       url: z.string().nullable(),
       dailyMenuUrl: z.string().nullable(),
+      icon: z.string().nullable(),
     }),
   ),
   members: z.array(
     z.object({
       id: z.string(),
       name: z.string(),
+      email: z.email(),
     }),
   ),
 });

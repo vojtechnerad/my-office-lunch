@@ -47,6 +47,7 @@ export const loginHandler: AppRouteHandler<LoginRoute> = async (c) => {
       token: token,
       name: user.name,
       id: user.id,
+      email: user.email,
     },
     HttpStatusCodes.OK,
   );

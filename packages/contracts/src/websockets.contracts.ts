@@ -8,6 +8,32 @@ export type RestaurantVotingResult = {
     neutral: number;
     unwanted: number;
   };
+  details: {
+    preferred: {
+      [userId: string]: {
+        timestamp: Date;
+        username: string;
+        userId: string;
+        email: string;
+      };
+    };
+    neutral: {
+      [userId: string]: {
+        timestamp: Date;
+        username: string;
+        userId: string;
+        email: string;
+      };
+    };
+    unwanted: {
+      [userId: string]: {
+        timestamp: Date;
+        username: string;
+        userId: string;
+        email: string;
+      };
+    };
+  };
 };
 
 export type GroupJoinPayload = {
@@ -16,6 +42,7 @@ export type GroupJoinPayload = {
 
 export type GroupJoinedPayload = {
   results: RestaurantVotingResult[];
+  myVotes: Record<string, RestaurantVote | null>;
 };
 
 export type VoteChangePayload = {

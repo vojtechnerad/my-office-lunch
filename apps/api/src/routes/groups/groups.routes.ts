@@ -57,7 +57,7 @@ export const getGroupById = createRoute({
   description: 'Get group by ID',
   request: {
     params: z.object({
-      groupId: z.string().uuid(),
+      groupId: z.uuid(),
     }),
   },
   responses: {

@@ -9,3 +9,10 @@ services:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=development-database-password
       - POSTGRES_DB=mol
+    volumes:
+      - db_data:/var/lib/postgresql
+
+volumes:
+  db_data:
+    external: true
+    name: 0732ae530ab79dcd2ede8d4a749ac6361cf215f2c4bd3e13d7bd965480c394f5

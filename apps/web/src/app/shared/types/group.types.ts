@@ -8,6 +8,7 @@ export type GroupDetails = {
     name: string;
     url: string | null;
     dailyMenuUrl: string | null;
+    icon: string | null;
   }>;
   members: Array<{
     id: string;

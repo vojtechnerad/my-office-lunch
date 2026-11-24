@@ -5,6 +5,7 @@ import {
   WebSocketClientToServerEvents,
   WebSocketServerToClientEvents,
 } from 'contracts/websockets.contracts';
+import { BACKEND_URL } from '../../../shared/config';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class SocketService {
   >;
 
   public connect(jwtToken: string): void {
-    this.socket = io('http://localhost:3000', {
+    this.socket = io(BACKEND_URL, {
       transports: ['websocket'],
       auth: {
         token: jwtToken,

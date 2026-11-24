@@ -9,11 +9,81 @@
   <p>{{ restaurant()?.dailyMenuUrl }}</p>
 }
 
-<button
+<!-- <button
   nz-button
   nzType="primary"
   nzDanger
   (click)="handleDeleteRestaurant(restaurant()?.id)"
 >
   Delete
-</button>
+</button> -->
+@if (mode() === 'edit') {
+  <button
+    hlmBtn
+    variant="destructive"
+    (click)="handleDeleteRestaurant(restaurant()?.id)"
+  >
+    Delete
+  </button>
+}
+
+<!-- New below -->
+<fieldset hlmFieldSet>
+  <!-- Name -->
+  <div hlmFieldGroup>
+    <div hlmField>
+      <label hlmFieldLabel for="field-input-preview-firstname">Name</label>
+      <input
+        hlmInput
+        id="field-input-preview-firstname"
+        type="text"
+        placeholder="Alex Cooper"
+      />
+      <p hlmFieldDescription>Enter the name of the restaurant.</p>
+    </div>
+  </div>
+
+  <!-- URL -->
+  <div hlmFieldGroup>
+    <div hlmField>
+      <label hlmFieldLabel for="field-input-preview-url">URL</label>
+      <input
+        hlmInput
+        id="field-input-preview-url"
+        type="text"
+        placeholder="https://example.com"
+      />
+      <p hlmFieldDescription>Enter the URL of the restaurant.</p>
+    </div>
+  </div>
+
+  <!-- Daily Menu URL -->
+  <div hlmFieldGroup>
+    <div hlmField>
+      <label hlmFieldLabel for="field-input-preview-daily-menu-url"
+        >Daily Menu URL</label
+      >
+      <input
+        hlmInput
+        id="field-input-preview-daily-menu-url"
+        type="text"
+        placeholder="https://example.com/daily-menu"
+      />
+      <p hlmFieldDescription>Enter the URL of the restaurant's daily menu.</p>
+    </div>
+  </div>
+
+  <!-- Icon -->
+  <div hlmFieldGroup>
+    <div hlmField>
+      <label hlmFieldLabel for="field-input-preview-icon">Icon</label>
+      <input
+        hlmInput
+        id="field-input-preview-icon"
+        type="text"
+        placeholder="https://example.com/icon.png"
+      />
+      <p hlmFieldDescription>Enter the URL of the restaurant's icon.</p>
+    </div>
+  </div>
+</fieldset>
