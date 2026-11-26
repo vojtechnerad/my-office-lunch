@@ -8,6 +8,8 @@
 
 ## Run tasks
 
+Use Node.js 22.22.3+, 24.15.0+, or 26+ (the supported Node.js versions for Angular 22). Install dependencies with `npm ci`.
+
 Start the legacy web app (`apps/web-old`) and API together with `npm start`.
 
 ## Database

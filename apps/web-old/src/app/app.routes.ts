@@ -1,29 +1,65 @@
 import { Route } from '@angular/router';
-import { Auth } from './features/auth/auth';
 import { authGuard } from './core/auth/auth.guard';
 import { MainLayout } from './layouts/main-layout/main-layout';
-import { Groups } from './features/groups/groups';
-import { GroupVoting } from './features/group-voting/pages/group-voting';
-import { Restaurants } from './features/restaurants/page/restaurants';
-import { RestaurantDetails } from './features/restaurant-details/page/restaurant-details';
-import { GroupDetails } from './features/group-details/page/group-details';
-import { UserProfile } from './features/user-profile/page/user-profile';
 
 export const appRoutes: Route[] = [
-  { path: 'auth', component: Auth },
+  {
+    path: 'auth',
+    loadComponent: () => import('./features/auth/auth').then((m) => m.Auth),
+  },
   // Protected routes
   {
     path: '',
     canActivate: [authGuard],
     component: MainLayout,
     children: [
-      { path: 'group-voting/:groupId', component: GroupVoting },
-      { path: 'groups', component: Groups },
-      { path: 'groups/:groupId', component: GroupDetails },
-      { path: 'restaurants', component: Restaurants },
-      { path: 'restaurants/new', component: RestaurantDetails },
-      { path: 'restaurants/:restaurantId', component: RestaurantDetails },
-      { path: 'profile', component: UserProfile },
+      {
+        path: 'group-voting/:groupId',
+        loadComponent: () =>
+          import('./features/group-voting/pages/group-voting').then(
+            (m) => m.GroupVoting,
+          ),
+      },
+      {
+        path: 'groups',
+        loadComponent: () =>
+          import('./features/groups/groups').then((m) => m.Groups),
+      },
+      {
+        path: 'groups/:groupId',
+        loadComponent: () =>
+          import('./features/group-details/page/group-details').then(
+            (m) => m.GroupDetails,
+          ),
+      },
+      {
+        path: 'restaurants',
+        loadComponent: () =>
+          import('./features/restaurants/page/restaurants').then(
+            (m) => m.Restaurants,
+          ),
+      },
+      {
+        path: 'restaurants/new',
+        loadComponent: () =>
+          import('./features/restaurant-details/page/restaurant-details').then(
+            (m) => m.RestaurantDetails,
+          ),
+      },
+      {
+        path: 'restaurants/:restaurantId',
+        loadComponent: () =>
+          import('./features/restaurant-details/page/restaurant-details').then(
+            (m) => m.RestaurantDetails,
+          ),
+      },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./features/user-profile/page/user-profile').then(
+            (m) => m.UserProfile,
+          ),
+      },
     ],
   },
 

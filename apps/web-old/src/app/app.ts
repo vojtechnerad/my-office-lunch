@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HlmToasterImports } from '@spartan-ng/helm/sonner';
 
@@ -6,6 +6,7 @@ import { HlmToasterImports } from '@spartan-ng/helm/sonner';
   imports: [RouterModule, HlmToasterImports],
   selector: 'mol-root',
   templateUrl: './app.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.scss',
 })
 export class App {}

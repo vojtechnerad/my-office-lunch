@@ -81,9 +81,8 @@
       }
     },
     "vitest": {
-      "executor": "@nx/vitest:test",
       "options": {
-        "configFile": "apps/api/vitest.config.mts"
+        "config": "./vitest.config.mts"
       }
     }
   }
