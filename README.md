@@ -12,6 +12,8 @@ Use Node.js 22.22.3+, 24.15.0+, or 26+ (the supported Node.js versions for Angul
 
 Start the legacy web app (`apps/web-old`) and API together with `npm start`.
 
+The web dev server uses `http://localhost:5173`. Its project-scoped `apps/web-old/.env.serve` keeps Angular from inheriting the API's `PORT` from the root `.env`.
+
 ## Database
 
 The API and Drizzle config read `DATABASE_URL` from the environment. If it is not set, the workspace falls back to the local development database on `postgresql://user:development-database-password@localhost:5432/mol`.
