@@ -8,7 +8,11 @@
 
 ## Run tasks
 
+Use Node.js 22.22.3+, 24.15.0+, or 26+ (the supported Node.js versions for Angular 22). Install dependencies with `npm ci`.
+
 Start the legacy web app (`apps/web-old`) and API together with `npm start`.
+
+The web dev server uses `http://localhost:5173`. Its project-scoped `apps/web-old/.env.serve` keeps Angular from inheriting the API's `PORT` from the root `.env`.
 
 ## Database
 

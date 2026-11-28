@@ -8,6 +8,8 @@ export default [
   {
     files: ['**/*.ts'],
     rules: {
+      // Angular 22's preset newly enforces OnPush; retain the migrated Eager root component.
+      '@angular-eslint/prefer-on-push-component-change-detection': 'off',
       '@angular-eslint/directive-selector': [
         'error',
         {

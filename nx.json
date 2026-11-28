@@ -25,17 +25,6 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
-    "@nx/eslint:lint": {
-      "cache": true,
-      "inputs": [
-        "default",
-        "^default",
-        "{workspaceRoot}/.eslintrc.json",
-        "{workspaceRoot}/.eslintignore",
-        "{workspaceRoot}/eslint.config.mjs",
-        "{workspaceRoot}/tools/eslint-rules/**/*"
-      ]
-    },
     "@nx/esbuild:esbuild": {
       "cache": true,
       "dependsOn": ["^build"],
@@ -97,6 +86,82 @@
         "ciTargetName": "test-ci",
         "testMode": "watch"
       }
+    },
+    {
+      "plugin": "@nx/vitest",
+      "options": {
+        "testMode": "watch",
+        "testTargetName": "vitest"
+      }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      },
+      "include": [
+        "apps/web-old/**/*",
+        "packages/spartan-ui/accordion/**/*",
+        "packages/spartan-ui/alert/**/*",
+        "packages/spartan-ui/alert-dialog/**/*",
+        "packages/spartan-ui/aspect-ratio/**/*",
+        "packages/spartan-ui/autocomplete/**/*",
+        "packages/spartan-ui/avatar/**/*",
+        "packages/spartan-ui/badge/**/*",
+        "packages/spartan-ui/breadcrumb/**/*",
+        "packages/spartan-ui/button/**/*",
+        "packages/spartan-ui/button-group/**/*",
+        "packages/spartan-ui/calendar/**/*",
+        "packages/spartan-ui/card/**/*",
+        "packages/spartan-ui/carousel/**/*",
+        "packages/spartan-ui/checkbox/**/*",
+        "packages/spartan-ui/collapsible/**/*",
+        "packages/spartan-ui/combobox/**/*",
+        "packages/spartan-ui/command/**/*",
+        "packages/spartan-ui/context-menu/**/*",
+        "packages/spartan-ui/date-picker/**/*",
+        "packages/spartan-ui/dialog/**/*",
+        "packages/spartan-ui/drawer/**/*",
+        "packages/spartan-ui/dropdown-menu/**/*",
+        "packages/spartan-ui/empty/**/*",
+        "packages/spartan-ui/field/**/*",
+        "packages/spartan-ui/hover-card/**/*",
+        "packages/spartan-ui/input/**/*",
+        "packages/spartan-ui/input-group/**/*",
+        "packages/spartan-ui/input-otp/**/*",
+        "packages/spartan-ui/item/**/*",
+        "packages/spartan-ui/kbd/**/*",
+        "packages/spartan-ui/label/**/*",
+        "packages/spartan-ui/menubar/**/*",
+        "packages/spartan-ui/native-select/**/*",
+        "packages/spartan-ui/navigation-menu/**/*",
+        "packages/spartan-ui/pagination/**/*",
+        "packages/spartan-ui/popover/**/*",
+        "packages/spartan-ui/progress/**/*",
+        "packages/spartan-ui/radio-group/**/*",
+        "packages/spartan-ui/resizable/**/*",
+        "packages/spartan-ui/scroll-area/**/*",
+        "packages/spartan-ui/select/**/*",
+        "packages/spartan-ui/separator/**/*",
+        "packages/spartan-ui/sheet/**/*",
+        "packages/spartan-ui/sidebar/**/*",
+        "packages/spartan-ui/skeleton/**/*",
+        "packages/spartan-ui/slider/**/*",
+        "packages/spartan-ui/sonner/**/*",
+        "packages/spartan-ui/spinner/**/*",
+        "packages/spartan-ui/switch/**/*",
+        "packages/spartan-ui/table/**/*",
+        "packages/spartan-ui/tabs/**/*",
+        "packages/spartan-ui/textarea/**/*",
+        "packages/spartan-ui/toggle/**/*",
+        "packages/spartan-ui/toggle-group/**/*",
+        "packages/spartan-ui/tooltip/**/*",
+        "packages/spartan-ui/typography/**/*",
+        "packages/spartan-ui/utils/**/*"
+      ]
     }
-  ]
+  ],
+  "affected": {
+    "legacy": true
+  }
 }

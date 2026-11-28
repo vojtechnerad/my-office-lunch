@@ -1,7 +1,11 @@
 @if (restaurant()) {
   <div class="flex items-center gap-2">
     @if (restaurant()?.icon) {
-      <img [src]="restaurant()?.icon" width="50px" alt="Náhled fotky" />
+      <img
+        [src]="$safeNavigationMigration(restaurant()?.icon)"
+        width="50px"
+        alt="Náhled fotky"
+      />
     }
     <h1 class="text-3xl">{{ restaurant()?.name }}</h1>
   </div>
@@ -21,7 +25,7 @@
   <button
     hlmBtn
     variant="destructive"
-    (click)="handleDeleteRestaurant(restaurant()?.id)"
+    (click)="handleDeleteRestaurant($safeNavigationMigration(restaurant()?.id))"
   >
     Delete
   </button>

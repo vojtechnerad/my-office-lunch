@@ -143,7 +143,12 @@
         "./packages/spartan-ui/typography/src/index.ts"
       ],
       "@spartan-ng/helm/utils": ["./packages/spartan-ui/utils/src/index.ts"]
-    }
+    },
+    "strict": false,
+    "noUncheckedSideEffectImports": false,
+    "types": ["*"],
+    "esModuleInterop": false,
+    "ignoreDeprecations": "6.0"
   },
   "exclude": ["node_modules", "tmp"]
 }
