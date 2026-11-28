@@ -102,5 +102,16 @@
     "typescript-eslint": "^8.40.0",
     "vite": "^8.0.0",
     "vitest": "4.1.9"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "bcrypt": true,
+    "@swc/core": true,
+    "less": true,
+    "nx": true,
+    "unrs-resolver": true,
+    "@parcel/watcher": true,
+    "msgpackr-extract": true,
+    "lmdb": true
   }
 }
